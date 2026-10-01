@@ -1,8 +1,8 @@
 package grupo01.lostonyetes.engine;
 
 public interface IGraphics {
-    IImage newImage();
-    IFont newFont();
+    IImage newImage(int _width, int _height);
+    IFont newFont(int _size, boolean _bold, boolean _italic);
     void setResolution();
     void setColor();
     void drawImage();
