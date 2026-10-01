@@ -9,9 +9,11 @@ public class DesktopImage implements IImage {
         width = _width;
         height = _heigth;
     }
+    @Override
     public int getWidth(){
         return width;
     }
+    @Override
     public int getHeight(){
         return height;
     }

@@ -11,12 +11,15 @@ public class DesktopFont implements IFont {
         bold = _bold;
         italic = _italic;
     }
+    @Override
     public int getSize(){
         return size;
     }
+    @Override
     public boolean isBold(){
         return bold;
     }
+    @Override
     public boolean isItalic(){
         return italic;
     }

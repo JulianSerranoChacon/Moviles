@@ -3,15 +3,6 @@ import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
 
 public class AGraphics implements IGraphics {
-    @Override
-    public IImage newImage() {
-        return null;
-    }
-
-    @Override
-    public IFont newFont() {
-        return null;
-    }
 
     @Override
     public IImage newImage(int _width, int _height) {
