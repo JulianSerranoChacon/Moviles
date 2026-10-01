@@ -14,6 +14,16 @@ public class AGraphics implements IGraphics {
     }
 
     @Override
+    public IImage newImage(int _width, int _height) {
+        return null;
+    }
+
+    @Override
+    public IFont newFont(int _size, boolean _bold, boolean _italic) {
+        return null;
+    }
+
+    @Override
     public void setResolution() {
 
     }
