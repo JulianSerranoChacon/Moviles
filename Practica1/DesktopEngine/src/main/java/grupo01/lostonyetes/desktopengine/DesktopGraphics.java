@@ -21,8 +21,8 @@ public class DesktopGraphics implements IGraphics {
         //TO DO
     }
     @Override
-    public void setColor(){
-        //TO DO
+    public void setColor(int colorARGB){
+        //TODO
     }
     @Override
     public void drawImage(){
@@ -33,7 +33,7 @@ public class DesktopGraphics implements IGraphics {
         //TO DO
     }
     @Override
-    public void fillRectangle(){
+    public void fillRectangle(int x, int y, int w, int h){
         //TO DO
     }
     @Override

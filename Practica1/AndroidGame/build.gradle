@@ -35,6 +35,7 @@ android {
 
 dependencies {
     implementation project(':AndroidEngine')
+    implementation project(':Engine')
     implementation project(':GameLogic')
     implementation libs.activity.ktx
     implementation libs.appcompat

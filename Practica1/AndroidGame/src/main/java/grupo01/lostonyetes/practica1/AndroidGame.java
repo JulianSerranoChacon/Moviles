@@ -8,17 +8,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import grupo01.lostonyetes.androidengine.AndroidEngine;
+
 public class AndroidGame extends AppCompatActivity {
+
+    private AndroidEngine engine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        //Instanciamos el motor
+        engine = new AndroidEngine(this);
+
+        //Le pedimos la SurfaceView al motor y la metemos en pantalla
+        setContentView(engine.getLayoutView());
     }
 }

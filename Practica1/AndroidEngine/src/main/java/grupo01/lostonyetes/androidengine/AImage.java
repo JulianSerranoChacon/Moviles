@@ -1,3 +1,5 @@
+package grupo01.lostonyetes.androidengine;
+
 import grupo01.lostonyetes.engine.IImage;
 
 public class AImage implements IImage {
