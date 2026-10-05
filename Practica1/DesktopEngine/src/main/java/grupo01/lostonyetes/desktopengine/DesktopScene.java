@@ -9,7 +9,7 @@ public class DesktopScene implements IScene, IState {
 
     }
     @Override
-    public void update() {
+    public void update(double dt) {
 
     }
     @Override

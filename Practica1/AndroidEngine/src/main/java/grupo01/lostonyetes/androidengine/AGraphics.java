@@ -51,7 +51,10 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
         return this.surfaceView;
     }
 
+    @Override
     public int getWidth() { return this.width; }
+
+    @Override
     public int getHeight() { return this.height; }
 
     public boolean isSurfaceReady() {
@@ -89,7 +92,7 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     }
 
     @Override
-    public void setResolution() {
+    public void setResolution( int width, int height) {
 
     }
 

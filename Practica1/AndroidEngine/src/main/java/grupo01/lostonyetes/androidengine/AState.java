@@ -9,7 +9,7 @@ public class AState implements IState {
     }
 
     @Override
-    public void update() {
+    public void update(double dt) {
 
 
     }

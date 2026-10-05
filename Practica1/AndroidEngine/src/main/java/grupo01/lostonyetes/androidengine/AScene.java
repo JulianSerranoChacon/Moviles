@@ -10,7 +10,7 @@ public class AScene implements IScene, IState {
     }
 
     @Override
-    public void update() {
+    public void update(double dt) {
 
     }
 

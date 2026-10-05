@@ -83,7 +83,7 @@ public class AndroidEngine implements IEngine, IState, Runnable {
      * TODO: Quitar toda la basura del cuadrado
      */
     @Override
-    public void update() {
+    public void update(double dt) {
         //muevo el cuadrado
         x += vx;
         y += vy;
@@ -169,7 +169,7 @@ public class AndroidEngine implements IEngine, IState, Runnable {
             double deltaTime = (now - lastTime) / NANO_PER_FRAME;
 
             if (deltaTime >= 1) {
-                update(); //Actualiza logicas y fisicas
+                update(deltaTime); //Actualiza logicas y fisicas
                 render(); //Dibuja el frame en pantalla
                 lastTime = now;
             }

@@ -3,7 +3,9 @@ package grupo01.lostonyetes.engine;
 public interface IGraphics {
     IImage newImage(int _width, int _height);
     IFont newFont(int _size, boolean _bold, boolean _italic);
-    void setResolution();
+    void setResolution( int width, int height);
+    public int getWidth();
+    public int getHeight();
     void setColor(int colorARGB);
     void drawImage();
     void fillRoundRectangle();

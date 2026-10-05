@@ -8,7 +8,7 @@ public class DesktopState implements IState {
 
     }
     @Override
-    public void update(){
+    public void update(double dt){
         
     }
     @Override
