@@ -18,8 +18,8 @@ public class AndroidEngine implements IEngine, IState, Runnable {
 
     //TODO borrar, todo esto es del cuadrado de pruena
     int x = 10,y = 10,w = 300, h=300;
-    int vx =10;
-    int vy =10;
+    int vx =1000;
+    int vy =1000;
 
 
     /**
@@ -29,6 +29,8 @@ public class AndroidEngine implements IEngine, IState, Runnable {
     public AndroidEngine(Context context){
         this.graphics = new AGraphics(context);
 
+
+        System.out.println("A");
         // Arrancamos el motor e inicializamos el hilo inmediatamente
         init();
     }
@@ -85,8 +87,8 @@ public class AndroidEngine implements IEngine, IState, Runnable {
     @Override
     public void update(double dt) {
         //muevo el cuadrado
-        x += vx;
-        y += vy;
+        x += vx * dt;
+        y += vy * dt;
 
         // pillo las dimensiones de pantalla
         int pantallaAncho = this.graphics.getWidth();
@@ -147,39 +149,45 @@ public class AndroidEngine implements IEngine, IState, Runnable {
      */
     @Override
     public void run() {
-        //Para ir a 60fps
-        final double NANO_PER_FRAME = 1000000000.0 / 60.0;
-        long lastTime = System.nanoTime();
+        if (gameThread != Thread.currentThread()) {
+        // Evita que cualquiera que no sea esta clase llame a este Runnable en un Thread
+        // Programación defensiva
+        throw new RuntimeException("run() should not be called directly");
+        }
 
-        while (running) {
-            // Si el hilo de ejecución arranca antes de que la SurfaceView
-            // esté lista, le damos un respiro al bucle para que no intente
-            // calcular lógica ni renderizados sobre la nada.
-            if (!this.graphics.isSurfaceReady()) {
-                try {
-                    Thread.sleep(10); // Espera 10 milisegundos y vuelve a comprobar
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                lastTime = System.nanoTime(); // Reseteamos el tiempo para evitar saltos locos de frames
-                continue; // Saltamos al siguiente ciclo del while hasta que la pantalla exista
-            }
 
-            long now = System.nanoTime();
-            double deltaTime = (now - lastTime) / NANO_PER_FRAME;
-
-            if (deltaTime >= 1) {
-                update(deltaTime); //Actualiza logicas y fisicas
-                render(); //Dibuja el frame en pantalla
-                lastTime = now;
-            }
-
-            // Un pequeño respiro al procesador
+        // Espera activa limpia hasta que la pantalla este lista
+        while (this.running && !this.graphics.isSurfaceReady()) {
             try {
-                Thread.sleep(1);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
+                return;
             }
+        }
+        long lastFrameTime = System.nanoTime();
+        long prevTime = lastFrameTime; // Informes de FPS
+        int frames = 0;
+
+        // Bucle de juego principal
+        while (running) {
+            long currentTime = System.nanoTime();
+            long nanoElapsedTime = currentTime - lastFrameTime;
+            lastFrameTime = currentTime;
+
+            // Informe de FPS
+            double dt = (double) nanoElapsedTime / 1.0E9;
+            this.update(dt);
+            if (currentTime - prevTime > 1000000000l) {
+                long fps = frames * 1000000000l / (currentTime - prevTime);
+                System.out.println("" + fps + " fps");
+                frames = 0;
+                prevTime = currentTime;
+            }
+            ++frames;
+
+            // Pintamos el frame
+            this.render();
         }
     }
 }

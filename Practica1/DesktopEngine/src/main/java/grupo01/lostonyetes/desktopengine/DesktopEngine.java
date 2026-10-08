@@ -13,9 +13,9 @@ public class DesktopEngine implements IEngine, IState,Runnable {
     private Thread gameThread;
 
     //TODO borrar, todo esto es del cuadrado de pruena
-    int x = 10,y = 10,w = 50, h=50;
-    int vx =10;
-    int vy =10;
+    int x = 10,y = 10,w = 150, h=150;
+    int vx =500;
+    int vy =500;
 
     private volatile boolean running = false;
 
@@ -57,8 +57,8 @@ public class DesktopEngine implements IEngine, IState,Runnable {
     @Override
     public void update(double dt) {
         //muevo el cuadrado
-        x += vx;
-        y += vy;
+        x += vx * dt;
+        y += vy * dt;
 
         // pillo las dimensiones de pantalla
         int pantallaAncho = this.mDesktopGraphics.getWidth();
@@ -91,7 +91,7 @@ public class DesktopEngine implements IEngine, IState,Runnable {
     public void render() {
         //Limpiar pantalla o pintar fondo con un rectángulo azul
         this.mDesktopGraphics.setColor(0xFF0000FF); // Alpha: FF, Rojo: 00, Verde: 00, Azul: FF
-        this.mDesktopGraphics.fillRectangle(0, 0, 900,700);
+        this.mDesktopGraphics.fillRectangle(0, 0, 10000,10000);
 
         //Pintar un rectangulo verde
         this.mDesktopGraphics.setColor(0xFF00FF00); // Verde opaco
@@ -133,13 +133,13 @@ public class DesktopEngine implements IEngine, IState,Runnable {
                 this.update(dt);
 
                 // Informe de FPS
-                /*frames++;
+                frames++;
                 if (currentTime - prevTime >= 1000000000L) {
                     long fps = (frames * 1000000000L) / (currentTime - prevTime);
                     System.out.println(fps + " fps");
                     frames = 0;
                     prevTime = currentTime;
-                }*/
+                }
 
                 //Renderizado
                 if (this.mDesktopGraphics.prepareFrame()) {

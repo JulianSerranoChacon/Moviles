@@ -64,12 +64,14 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     /**
      * Prepara el canvas para poder ser utilizado
      */
-    public void prepareCanvas() {
+    public boolean prepareCanvas() {
         if (surfaceReady && holder.getSurface().isValid()) {
             canvas = holder.lockCanvas();
         } else {
             canvas = null;
         }
+
+        return canvas == null;
     }
 
     /**

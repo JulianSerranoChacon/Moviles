@@ -10,6 +10,6 @@ public class DesktopGame {
 
         engine = new DesktopEngine();
 
-        engine.setWindowInfo("Los tonyetes", 800,600);
+        engine.setWindowInfo("Los tonyetes",540 ,1200);
     }
 }
