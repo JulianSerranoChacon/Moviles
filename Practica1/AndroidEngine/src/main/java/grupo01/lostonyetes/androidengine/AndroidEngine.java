@@ -1,17 +1,21 @@
 package grupo01.lostonyetes.androidengine;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.view.SurfaceView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import grupo01.lostonyetes.engine.IAudio;
 import grupo01.lostonyetes.engine.IEngine;
+import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IState;
 
 public class AndroidEngine implements IEngine, IState, Runnable {
-
+    private final AssetManager assetManager;
     private final AGraphics graphics;
     private Thread gameThread;
     private volatile boolean running = false;
@@ -27,6 +31,7 @@ public class AndroidEngine implements IEngine, IState, Runnable {
      * @param context la actividad que inicializa el juego
      */
     public AndroidEngine(Context context){
+        this.assetManager = context.getAssets();
         this.graphics = new AGraphics(context);
 
 
@@ -47,6 +52,17 @@ public class AndroidEngine implements IEngine, IState, Runnable {
      * Metodo publico que devuelve el modulo de graficos del motor
      * @return
      */
+
+    @Override
+    public InputStream openInputStream(String filepath) {
+        try {
+            return this.assetManager.open(filepath);
+        } catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     public IGraphics getGraphics() {
         return graphics;
@@ -139,6 +155,11 @@ public class AndroidEngine implements IEngine, IState, Runnable {
         this.graphics.setColor(0xFFFF0000);
         this.graphics.fillRectangle(x, y, w, h);
 
+        // TODO: aqui estoy probando a cargar y dibujar textos, no es lo mejor en eficiencia, pero es por probar
+
+        IFont miFuente = this.graphics.newFont("Roboto-Regular.ttf", 30f, false, false);
+
+        this.graphics.drawText("¡Hola Android!", 50, 100, miFuente);
         // mandamos a renderizar
         this.graphics.postCanvas();
     }

@@ -1,9 +1,13 @@
 package grupo01.lostonyetes.desktopengine;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import grupo01.lostonyetes.engine.IAudio;
 import grupo01.lostonyetes.engine.IEngine;
+import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IState;
 
@@ -25,6 +29,17 @@ public class DesktopEngine implements IEngine, IState,Runnable {
 
         init();
     }
+
+    @Override
+    public InputStream openInputStream(String filepath) {
+        try {
+            return new FileInputStream(filepath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     public IGraphics getGraphics(){
         return mDesktopGraphics;
@@ -96,6 +111,11 @@ public class DesktopEngine implements IEngine, IState,Runnable {
         //Pintar un rectangulo verde
         this.mDesktopGraphics.setColor(0xFF00FF00); // Verde opaco
         this.mDesktopGraphics.fillRectangle(x, y, w, h);
+
+        //Cargamos una fuente de texto y escribimos texto en pantalla
+        IFont miFuente = this.mDesktopGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
+
+        this.mDesktopGraphics.drawText("¡Hola Escritorio!", 50, 100, miFuente);
     }
 
     @Override

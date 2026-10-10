@@ -3,6 +3,8 @@ package grupo01.lostonyetes.desktopengine;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import javax.swing.JFrame;
 
@@ -62,8 +64,14 @@ public class DesktopGraphics implements IGraphics{
         return new DesktopImage(_width, _height);
     }
     @Override
-    public IFont newFont(int _size, boolean _bold, boolean _italic){
-        return new DesktopFont(_size, _bold,_italic);
+    public IFont newFont(String filePath, float _size, boolean _bold, boolean _italic) {
+        try {
+            InputStream is = new FileInputStream(filePath);
+            return new DesktopFont(is, _size, _bold, _italic);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     @Override
     public void setResolution( int width, int height){
@@ -89,6 +97,22 @@ public class DesktopGraphics implements IGraphics{
         if (this.graphics2D != null) {
             // El parámetro 'true' indica que el entero incluye canal Alpha (transparencia)
             this.graphics2D.setColor(new java.awt.Color(colorARGB, true));
+        }
+    }
+    @Override
+    public void drawText(String text, int x, int y, IFont font) {
+        if (font != null && this.bufferStrategy != null) {
+            DesktopFont desktopFont = (DesktopFont) font;
+            Graphics graphics = this.bufferStrategy.getDrawGraphics();
+
+            if (graphics != null) {
+                graphics.setFont(desktopFont.getAwtFont());
+
+                setColor(0xFFFFFFFF); //ESTO HAY QUE CAMBIARLO, ESTA PARA PROBAR QUE SE VEA
+
+                graphics.drawString(text, x, y);
+                graphics.dispose();
+            }
         }
     }
     @Override

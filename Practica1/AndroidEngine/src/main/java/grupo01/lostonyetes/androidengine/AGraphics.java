@@ -1,6 +1,7 @@
 package grupo01.lostonyetes.androidengine;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
@@ -13,7 +14,7 @@ import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
 
 public class AGraphics implements IGraphics, SurfaceHolder.Callback{
-
+    private final AssetManager assetManager;
     private final SurfaceView surfaceView;
     private final SurfaceHolder holder;
     private Canvas canvas; // Se usará internamente en tus métodos de dibujo
@@ -30,6 +31,7 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
      * @param context la Activity que inicializa el juego
      */
     public AGraphics(Context context) {
+        this.assetManager = context.getAssets();
         //Instanciamos el SurfaceView pasándole el contexto de la aplicación
         this.surfaceView = new SurfaceView(context);
         this.holder = this.surfaceView.getHolder();
@@ -89,8 +91,8 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     }
 
     @Override
-    public IFont newFont(int _size, boolean _bold, boolean _italic) {
-        return null;
+    public IFont newFont(String filePath, float _size, boolean _bold, boolean _italic) {
+        return new AFont(this.assetManager, filePath, _size);
     }
 
     @Override
@@ -107,6 +109,19 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
         this.paint.setColor(colorARGB);
     }
 
+    @Override
+    public void drawText(String text, int x, int y, IFont font) {
+        if (font != null && this.canvas != null) {
+            AFont androidFont = (AFont) font; //Convertimos IFont en AFont y creamos un nuevo AFont
+
+            this.paint.setTypeface(androidFont.getTypeface());
+            this.paint.setTextSize(androidFont.getSize());
+
+            this.paint.setColor(0xFFFFFFFF); //ESTO HAY QUE CAMBIARLO, ESTA PARA PROBAR QUE SE VEA
+
+            this.canvas.drawText(text, x, y, paint); // Dibuja el texto en pantalla
+        }
+    }
     @Override
     public void drawImage() {
 
