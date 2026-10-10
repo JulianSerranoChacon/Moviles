@@ -4,7 +4,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
+import java.io.File;
+import javax.imageio.ImageIO;
 
 import javax.swing.JFrame;
 
@@ -17,7 +23,7 @@ public class DesktopGraphics implements IGraphics{
     private JFrame myView;
     private BufferStrategy bufferStrategy;
     private Graphics graphics2D;
-
+    private final Map<String, BufferedImage> imagenes = new HashMap<>();
 
     public DesktopGraphics(){
         this.myView = new JFrame();
@@ -45,6 +51,32 @@ public class DesktopGraphics implements IGraphics{
         else {
             // En "modo debug" podríamos querer escribir esto.
             //System.out.println("BufferStrategy tras " + (100 - intentos) + " intentos.");
+        }
+        //carga de imagenes de data
+        File carpeta = new File("data/images/");
+        if (carpeta.exists() && carpeta.isDirectory()) {
+            File[] archivos = carpeta.listFiles();
+            if (archivos != null) {
+                for (File a : archivos){
+                    String extension = a.getName().substring(a.getName().lastIndexOf('.') + 1).toLowerCase();
+
+                    if (extension.equals("png") || extension.equals("jpg") || extension.equals("jpeg")){
+
+                        try {
+                            BufferedImage imagen = ImageIO.read(a);
+                            if (imagen != null) {
+                                imagenes.put(a.getName(), imagen);
+                            }
+
+                        } catch (IOException e) {
+                            System.err.println(
+                                    "Error al cargar " + a.getName()
+                                            + ": " + e.getMessage()
+                            );
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -116,8 +148,16 @@ public class DesktopGraphics implements IGraphics{
         }
     }
     @Override
-    public void drawImage(){
-        //TODO
+    public void drawImage(String nombre, int X, int Y, int width, int height){
+        BufferedImage imagen = imagenes.get(nombre);
+        if (imagen != null) {
+            graphics2D.drawImage(
+                    imagen,
+                    X, Y,
+                    width, height,
+                    null
+            );
+        }
     }
     @Override
     public void fillRoundRectangle(){

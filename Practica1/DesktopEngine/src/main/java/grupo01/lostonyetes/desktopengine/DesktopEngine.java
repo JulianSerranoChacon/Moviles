@@ -112,6 +112,9 @@ public class DesktopEngine implements IEngine, IState,Runnable {
         this.mDesktopGraphics.setColor(0xFF00FF00); // Verde opaco
         this.mDesktopGraphics.fillRectangle(x, y, w, h);
 
+        //Probamos a pintar una imagen
+        this.mDesktopGraphics.drawImage("CuboMinecraft.png", 50,50, w, h);
+
         //Cargamos una fuente de texto y escribimos texto en pantalla
         IFont miFuente = this.mDesktopGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
 

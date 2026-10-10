@@ -123,7 +123,7 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
         }
     }
     @Override
-    public void drawImage() {
+    public void drawImage(String nombre, int X, int Y, int width, int height) {
 
     }
 

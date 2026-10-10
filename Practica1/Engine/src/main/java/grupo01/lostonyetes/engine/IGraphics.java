@@ -8,7 +8,7 @@ public interface IGraphics {
     public int getHeight();
     void setColor(int colorARGB);
     void drawText(String text, int x, int y, IFont font);
-    void drawImage();
+    void drawImage(String nombre, int X, int Y, int width, int height);
     void fillRoundRectangle();
     void fillRectangle(int x, int y, int w, int h);
     void fillCircle();
