@@ -2,12 +2,18 @@ package grupo01.lostonyetes.androidengine;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
@@ -124,7 +130,22 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     }
     @Override
     public void drawImage(String nombre, int X, int Y, int width, int height) {
-
+        try{
+            InputStream is = assetManager.open(nombre);
+            Bitmap bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+            if (bitmap != null) {
+                Canvas canvas = holder.lockCanvas();
+                if (canvas != null) {
+                    Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+                    Rect pos = new Rect(X, Y,X + width, Y + height);
+                    canvas.drawBitmap(bitmap, null, pos, paint);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error al cargar " + nombre);
+            e.printStackTrace();
+        }
     }
 
     @Override

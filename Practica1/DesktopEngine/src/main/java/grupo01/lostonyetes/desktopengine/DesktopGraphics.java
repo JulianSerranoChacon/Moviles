@@ -69,10 +69,7 @@ public class DesktopGraphics implements IGraphics{
                             }
 
                         } catch (IOException e) {
-                            System.err.println(
-                                    "Error al cargar " + a.getName()
-                                            + ": " + e.getMessage()
-                            );
+                            System.err.println("Error al cargar " + a.getName() + ": " + e.getMessage());
                         }
                     }
                 }
