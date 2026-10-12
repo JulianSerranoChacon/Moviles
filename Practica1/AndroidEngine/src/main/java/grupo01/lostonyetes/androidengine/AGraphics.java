@@ -130,7 +130,6 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     }
     @Override
     public void drawImage(String nombre, int X, int Y, int width, int height) {
-        /*
         try{
             InputStream is = assetManager.open("images/"+nombre);
             Bitmap bitmap = BitmapFactory.decodeStream(is);
@@ -144,7 +143,6 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
             System.err.println("Error al cargar " + nombre);
             e.printStackTrace();
         }
-        */
     }
 
     @Override
