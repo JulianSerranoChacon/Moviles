@@ -155,6 +155,9 @@ public class AndroidEngine implements IEngine, IState, Runnable {
         this.graphics.setColor(0xFFFF0000);
         this.graphics.fillRectangle(x, y, w, h);
 
+        // TODO: Probamos a pintar una imagen
+        this.graphics.drawImage("CuboMinecraft.png", 50,50, w, h);
+
         // TODO: aqui estoy probando a cargar y dibujar textos, no es lo mejor en eficiencia, pero es por probar
 
         IFont miFuente = this.graphics.newFont("Roboto-Regular.ttf", 30f, false, false);
