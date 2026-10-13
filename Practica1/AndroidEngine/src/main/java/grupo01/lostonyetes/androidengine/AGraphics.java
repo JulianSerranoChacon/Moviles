@@ -29,6 +29,12 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     private final Paint paint;
     private boolean surfaceReady = false;
 
+
+    private float scale;
+    private int dx; //traslacion en X
+    private int dy; //traslacion en Y
+    private int logicW;
+    private int logicH;
     private int width = 0;
     private int height = 0;
 
@@ -79,6 +85,12 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
             canvas = null;
         }
 
+        //cosas del scale
+        calculateTransforms();
+        this.scale(this.scale, this.scale);
+        this.translate(this.dx, this.dy);
+        //cosas del scale
+
         return canvas == null;
     }
 
@@ -105,7 +117,46 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     public void setResolution( int width, int height) {
 
     }
+    private void calculateTransforms(){
+        float tempW = this.surfaceView.getWidth()/this.logicW;
+        float tempH = this.surfaceView.getHeight()/this.logicH;
 
+        this.scale = Math.min(tempW,tempH); // tempW < tempH ? tempW : tempH;
+
+        float tW = this.logicW * this.scale;
+        float tH = this.logicH * this.scale;
+
+        this.dx = (int)((this.surfaceView.getWidth() - tW)/2);
+        this.dy = (int)((this.surfaceView.getHeight() - tH)/2);
+    }
+
+    @Override
+    public void scale(float sw, float sh) {
+        this.canvas.scale(sw, sh);
+    }
+
+    @Override
+    public void translate(int dx, int dy) {
+        this.canvas.translate(dx, dy);
+    }
+
+    @Override
+    public void restore() {
+
+    }
+
+    @Override
+    public void save() {
+
+    }
+
+    /*protected int realToLogicX(int x){
+
+    }
+
+    protected int realToLogicY(int y){
+
+    }*/
     /**
      * Metodo para setear el color del pincel
      * @param colorARGB int con el color a mostrar

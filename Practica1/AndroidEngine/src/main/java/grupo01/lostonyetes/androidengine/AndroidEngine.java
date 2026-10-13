@@ -20,6 +20,11 @@ public class AndroidEngine implements IEngine, IState, Runnable {
     private Thread gameThread;
     private volatile boolean running = false;
 
+
+    private int logicW;
+    private int logicH;
+
+
     //TODO borrar, todo esto es del cuadrado de pruena
     int x = 10,y = 10,w = 300, h=300;
     int vx =1000;
@@ -81,6 +86,12 @@ public class AndroidEngine implements IEngine, IState, Runnable {
     @Override
     public void setState() {
 
+    }
+
+    @Override
+    public void setLogicResolution(int w, int h) {
+        this.logicW = w;
+        this.logicH = h;
     }
 
     /**
