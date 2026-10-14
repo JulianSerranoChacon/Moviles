@@ -12,6 +12,7 @@ import grupo01.lostonyetes.engine.IAudio;
 import grupo01.lostonyetes.engine.IEngine;
 import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
+import grupo01.lostonyetes.engine.IImage;
 import grupo01.lostonyetes.engine.IState;
 
 public class AndroidEngine implements IEngine, IState, Runnable {
@@ -167,7 +168,8 @@ public class AndroidEngine implements IEngine, IState, Runnable {
         this.graphics.fillRectangle(x, y, w, h);
 
         // TODO: Probamos a pintar una imagen
-        this.graphics.drawImage("CuboMinecraft.png", 50,50, w, h);
+        IImage miImagen = this.graphics.newImage("CuboMinecraft.png", 50,50, w, h);
+        this.graphics.drawImage(miImagen);
 
         // TODO: aqui estoy probando a cargar y dibujar textos, no es lo mejor en eficiencia, pero es por probar
 

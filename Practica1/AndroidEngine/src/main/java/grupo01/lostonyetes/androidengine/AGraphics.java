@@ -84,13 +84,13 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
         } else {
             canvas = null;
         }
-
+        /*
         //cosas del scale
         calculateTransforms();
         this.scale(this.scale, this.scale);
         this.translate(this.dx, this.dy);
         //cosas del scale
-
+        */
         return canvas == null;
     }
 
@@ -104,8 +104,8 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     }
 
     @Override
-    public IImage newImage(int _width, int _height) {
-        return null;
+    public IImage newImage(String filePath, int x, int y, int w, int h) {
+        return new AImage(this.assetManager, filePath, x, y, w, h);
     }
 
     @Override
@@ -180,19 +180,15 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
         }
     }
     @Override
-    public void drawImage(String nombre, int X, int Y, int width, int height) {
-        try{
-            InputStream is = assetManager.open("images/"+nombre);
-            Bitmap bitmap = BitmapFactory.decodeStream(is);
-            is.close();
-            if (bitmap != null) {
+    public void drawImage(IImage img) {
+        if (img != null && this.canvas != null){
+            AImage androidImage = (AImage) img;
+            if (androidImage.getBitmap() != null) {
                 Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
-                Rect pos = new Rect(X, Y,X + width, Y + height);
-                canvas.drawBitmap(bitmap, null, pos, paint);
+                Rect pos = new Rect(img.getPosX(), img.getPosY(),
+                        img.getPosX() + img.getWidth(), img.getPosY() + img.getHeight());
+                canvas.drawBitmap(androidImage.getBitmap(), null, pos, paint);
             }
-        } catch (IOException e) {
-            System.err.println("Error al cargar " + nombre);
-            e.printStackTrace();
         }
     }
 

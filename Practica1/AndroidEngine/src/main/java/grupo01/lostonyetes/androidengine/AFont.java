@@ -10,7 +10,7 @@ public class AFont implements IFont {
     private float size;
 
     public AFont(AssetManager assetManager, String filePath, float size) {
-        this.typeface = Typeface.createFromAsset(assetManager, filePath); //carga la fuente
+        this.typeface = Typeface.createFromAsset(assetManager, "fonts/"+filePath); //carga la fuente
         this.size = size;
     }
 

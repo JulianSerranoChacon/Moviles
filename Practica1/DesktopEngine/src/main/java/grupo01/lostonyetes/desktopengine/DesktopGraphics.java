@@ -96,8 +96,8 @@ public class DesktopGraphics implements IGraphics{
     }
 
     @Override
-    public IImage newImage(int _width, int _height){
-        return new DesktopImage(_width, _height);
+    public IImage newImage(String filePath, int x, int y, int w, int h){
+        return new DesktopImage(imagenes.get(filePath),x, y,w,h);
     }
     @Override
     public IFont newFont(String filePath, float _size, boolean _bold, boolean _italic) {
@@ -194,13 +194,13 @@ public class DesktopGraphics implements IGraphics{
         }
     }
     @Override
-    public void drawImage(String nombre, int X, int Y, int width, int height){
-        BufferedImage imagen = imagenes.get(nombre);
-        if (imagen != null) {
+    public void drawImage(IImage img){
+        DesktopImage Img = (DesktopImage) img;
+        if (Img.getBufferedImage() != null) {
             graphics2D.drawImage(
-                    imagen,
-                    X, Y,
-                    width, height,
+                    Img.getBufferedImage(),
+                    Img.getPosX(), Img.getPosY(),
+                    Img.getWidth(), Img.getHeight(),
                     null
             );
         }
@@ -233,13 +233,13 @@ public class DesktopGraphics implements IGraphics{
         }
         // Obtenemos el contexto gráfico para dibujar en este frame
         this.graphics2D = (Graphics2D) this.bufferStrategy.getDrawGraphics();
-
+        /*
         //cosas del scale
         calculateTransforms();
         this.scale(this.scale, this.scale);
         this.translate(this.dx, this.dy);
         //cosas del scale
-
+        */
         return this.graphics2D != null;
     }
 

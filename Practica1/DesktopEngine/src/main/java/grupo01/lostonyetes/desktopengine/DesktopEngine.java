@@ -9,6 +9,7 @@ import grupo01.lostonyetes.engine.IAudio;
 import grupo01.lostonyetes.engine.IEngine;
 import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
+import grupo01.lostonyetes.engine.IImage;
 import grupo01.lostonyetes.engine.IState;
 
 public class DesktopEngine implements IEngine, IState,Runnable {
@@ -126,7 +127,8 @@ public class DesktopEngine implements IEngine, IState,Runnable {
         this.mDesktopGraphics.fillRectangle(x, y, w, h);
 
         //Probamos a pintar una imagen
-        this.mDesktopGraphics.drawImage("CuboMinecraft.png", 50,50, w, h);
+        IImage miImagen = this.mDesktopGraphics.newImage("CuboMinecraft.png", 50,50, w, h);
+        this.mDesktopGraphics.drawImage(miImagen);
 
         //Cargamos una fuente de texto y escribimos texto en pantalla
         IFont miFuente = this.mDesktopGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
