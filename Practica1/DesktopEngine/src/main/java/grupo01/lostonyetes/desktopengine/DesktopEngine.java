@@ -11,10 +11,12 @@ import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
 import grupo01.lostonyetes.engine.IState;
+import grupo01.lostonyetes.engine.SceneManager;
 
-public class DesktopEngine implements IEngine, IState,Runnable {
+public class DesktopEngine implements IEngine, Runnable {
     DesktopGraphics mDesktopGraphics;
     DesktopAudio mDesktopAudio;
+    SceneManager mSceneManager;
     private Thread gameThread;
 
 //    private int logicW;
@@ -30,7 +32,7 @@ public class DesktopEngine implements IEngine, IState,Runnable {
     public DesktopEngine(){
         mDesktopGraphics = new DesktopGraphics();
         mDesktopAudio = new DesktopAudio();
-
+        mSceneManager = new SceneManager();
 //        logicW = 0;
 //        logicH = 0;
 
@@ -64,6 +66,11 @@ public class DesktopEngine implements IEngine, IState,Runnable {
 
     }
 
+    @Override
+    public void setScene(IState s) {
+        this.mSceneManager.SetScene(s);
+    }
+
 //    @Override
 //    public void setLogicResolution(int w, int h) {
 //        this.logicW = w;
@@ -73,7 +80,6 @@ public class DesktopEngine implements IEngine, IState,Runnable {
     public void setWindowInfo(String title, int width, int height ){
         mDesktopGraphics.setWindowInfo(title,width,height);
     }
-    @Override
     public void init() {
         if (running)
             return; // Si ya está corriendo, no hacemos nada
@@ -81,10 +87,11 @@ public class DesktopEngine implements IEngine, IState,Runnable {
         running = true;
         gameThread = new Thread(this);
         gameThread.start(); // Esto dispara automáticamente el método run() en segundo plano
-
+        mSceneManager.init();
     }
-    @Override
     public void update(double dt) {
+        mSceneManager.update(dt);
+        /*
         //muevo el cuadrado
         x += vx * dt;
         y += vy * dt;
@@ -115,9 +122,18 @@ public class DesktopEngine implements IEngine, IState,Runnable {
             y = pantallaAlto - h - 2; // Lo separamos 2 píxeles del suelo
             vy = -Math.abs(vy); // Fuerza a que la velocidad sea negativa (va hacia arriba)
         }
+
+         */
     }
-    @Override
     public void render() {
+        if (this.mDesktopGraphics.prepareFrame()) {
+            try {
+                this.mSceneManager.render();
+            } finally {
+                this.mDesktopGraphics.endFrame();
+            }
+        }
+        /*
         //Limpiar pantalla o pintar fondo con un rectángulo azul
         this.mDesktopGraphics.setColor(0xFF0000FF); // Alpha: FF, Rojo: 00, Verde: 00, Azul: FF
         this.mDesktopGraphics.fillRectangle(0, 0, 10000,10000);
@@ -134,6 +150,7 @@ public class DesktopEngine implements IEngine, IState,Runnable {
         IFont miFuente = this.mDesktopGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
 
         this.mDesktopGraphics.drawText("¡Hola Escritorio!", 50, 100, miFuente);
+        */
     }
 
     @Override
@@ -180,13 +197,7 @@ public class DesktopEngine implements IEngine, IState,Runnable {
                 }
 
                 //Renderizado
-                if (this.mDesktopGraphics.prepareFrame()) {
-                    try {
-                        this.render();
-                    } finally {
-                        this.mDesktopGraphics.endFrame();
-                    }
-                }
+                this.render();
             }
         }
     }

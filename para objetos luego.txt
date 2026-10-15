@@ -1,0 +1,10 @@
+package grupo01.lostonyetes.engine;
+
+public interface IObject extends IState {
+    float getWidth();
+    float getHeight();
+    float getPosX();
+    float getPosY();
+    void setDimension(float w, float h);
+    void setPos(float x, float y);
+}

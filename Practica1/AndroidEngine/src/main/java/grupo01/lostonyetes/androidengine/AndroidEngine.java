@@ -14,13 +14,14 @@ import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
 import grupo01.lostonyetes.engine.IState;
+import grupo01.lostonyetes.engine.SceneManager;
 
-public class AndroidEngine implements IEngine, IState, Runnable {
+public class AndroidEngine implements IEngine, Runnable {
     private final AssetManager assetManager;
     private final AGraphics graphics;
     private Thread gameThread;
     private volatile boolean running = false;
-
+    private SceneManager mSceneManager;
 
 //    private int logicW;
 //    private int logicH;
@@ -39,6 +40,7 @@ public class AndroidEngine implements IEngine, IState, Runnable {
     public AndroidEngine(Context context){
         this.assetManager = context.getAssets();
         this.graphics = new AGraphics(context);
+        this.mSceneManager = new SceneManager();
 
 
         System.out.println("A");
@@ -89,6 +91,11 @@ public class AndroidEngine implements IEngine, IState, Runnable {
 
     }
 
+    @Override
+    public void setScene(IState s) {
+        mSceneManager.SetScene(s);
+    }
+
 //    @Override
 //    public void setLogicResolution(int w, int h) {
 //        this.logicW = w;
@@ -98,7 +105,6 @@ public class AndroidEngine implements IEngine, IState, Runnable {
     /**
      * Metodo init llamado en la constructora para iniciar la ejecucion del motor y el hilo
      */
-    @Override
     public void init() {
         if (running)
             return; // Si ya está corriendo, no hacemos nada
@@ -112,8 +118,9 @@ public class AndroidEngine implements IEngine, IState, Runnable {
      * Metodo update del motor
      * TODO: Quitar toda la basura del cuadrado
      */
-    @Override
     public void update(double dt) {
+        mSceneManager.update(dt);
+        /*
         //muevo el cuadrado
         x += vx * dt;
         y += vy * dt;
@@ -143,16 +150,18 @@ public class AndroidEngine implements IEngine, IState, Runnable {
         else if ((y + h) >= pantallaAlto) {
             y = pantallaAlto - h - 2; // Lo separamos 2 píxeles del suelo
             vy = -Math.abs(vy); // Fuerza a que la velocidad sea negativa (va hacia arriba)
-        }
+        }*/
     }
 
     /**
      * Bucle de renderizado del motor
      */
-    @Override
     public void render() {
-        //Intentamos preparar el lienzo
         this.graphics.prepareCanvas();
+        mSceneManager.render();
+        this.graphics.postCanvas();
+        /*
+        //Intentamos preparar el lienzo
 
         // si falla el canvas salimos
         if (this.graphics.getView().getHolder().getSurface().isValid() == false) {
@@ -176,8 +185,8 @@ public class AndroidEngine implements IEngine, IState, Runnable {
         IFont miFuente = this.graphics.newFont("Roboto-Regular.ttf", 30f, false, false);
 
         this.graphics.drawText("¡Hola Android!", 50, 100, miFuente);
+        */
         // mandamos a renderizar
-        this.graphics.postCanvas();
     }
 
 

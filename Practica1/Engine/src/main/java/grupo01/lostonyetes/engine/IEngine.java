@@ -8,6 +8,7 @@ public interface IEngine {
     IAudio getAudio();
     ArrayList getInput();
     void setState();
+    void setScene(IState s);
 
 //    void setLogicResolution(int w, int h);
 

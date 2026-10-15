@@ -9,10 +9,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import grupo01.lostonyetes.androidengine.AndroidEngine;
+import grupo01.lostonyetes.gamelogic.GameLogic;
 
 public class AndroidGame extends AppCompatActivity {
 
     private AndroidEngine engine;
+    private GameLogic logic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,5 +25,6 @@ public class AndroidGame extends AppCompatActivity {
 
         //Le pedimos la SurfaceView al motor y la metemos en pantalla
         setContentView(engine.getLayoutView());
+        logic = new GameLogic(engine);
     }
 }

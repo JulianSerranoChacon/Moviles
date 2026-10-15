@@ -1,0 +1,48 @@
+package grupo01.lostonyetes.gamelogic;
+
+import grupo01.lostonyetes.engine.IEngine;
+import grupo01.lostonyetes.engine.IFont;
+import grupo01.lostonyetes.engine.IGraphics;
+import grupo01.lostonyetes.engine.IImage;
+import grupo01.lostonyetes.engine.IState;
+
+public class StartScene implements IState {
+    IGraphics mGraphics;
+    IEngine mEngine;
+
+    public StartScene(IEngine eng){
+        mEngine = eng;
+        mGraphics = eng.getGraphics();
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void update(double dt) {
+
+    }
+
+    @Override
+    public void render() {
+        //Limpiar pantalla o pintar fondo con un rectángulo azul
+        this.mGraphics.setColor(0xFF0000FF); // Alpha: FF, Rojo: 00, Verde: 00, Azul: FF
+        this.mGraphics.fillRectangle(0, 0, 10000,10000);
+
+        //Pintar un rectangulo verde
+        this.mGraphics.setColor(0xFF00FF00); // Verde opaco
+        //this.mGraphics.fillRectangle(x, y, w, h);
+        this.mGraphics.fillRectangle(100, 100, 100, 100);
+
+        //Probamos a pintar una imagen
+        IImage miImagen = this.mGraphics.newImage("CuboMinecraft.png", 50,50, 50, 50);
+        this.mGraphics.drawImage(miImagen);
+
+        //Cargamos una fuente de texto y escribimos texto en pantalla
+        IFont miFuente = this.mGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
+
+        this.mGraphics.drawText("¡Hola Escritorio!", 50, 100, miFuente);
+    }
+}
