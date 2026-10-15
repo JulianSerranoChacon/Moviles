@@ -22,8 +22,8 @@ public class AndroidEngine implements IEngine, IState, Runnable {
     private volatile boolean running = false;
 
 
-    private int logicW;
-    private int logicH;
+//    private int logicW;
+//    private int logicH;
 
 
     //TODO borrar, todo esto es del cuadrado de pruena
@@ -89,11 +89,11 @@ public class AndroidEngine implements IEngine, IState, Runnable {
 
     }
 
-    @Override
-    public void setLogicResolution(int w, int h) {
-        this.logicW = w;
-        this.logicH = h;
-    }
+//    @Override
+//    public void setLogicResolution(int w, int h) {
+//        this.logicW = w;
+//        this.logicH = h;
+//    }
 
     /**
      * Metodo init llamado en la constructora para iniciar la ejecucion del motor y el hilo

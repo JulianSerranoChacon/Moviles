@@ -9,7 +9,7 @@ public interface IEngine {
     ArrayList getInput();
     void setState();
 
-    void setLogicResolution(int w, int h);
+//    void setLogicResolution(int w, int h);
 
 
 }

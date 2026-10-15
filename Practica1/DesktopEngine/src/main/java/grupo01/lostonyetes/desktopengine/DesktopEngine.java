@@ -17,8 +17,8 @@ public class DesktopEngine implements IEngine, IState,Runnable {
     DesktopAudio mDesktopAudio;
     private Thread gameThread;
 
-    private int logicW;
-    private int logicH;
+//    private int logicW;
+//    private int logicH;
 
     //TODO borrar, todo esto es del cuadrado de pruena
     int x = 10,y = 10,w = 150, h=150;
@@ -31,8 +31,8 @@ public class DesktopEngine implements IEngine, IState,Runnable {
         mDesktopGraphics = new DesktopGraphics();
         mDesktopAudio = new DesktopAudio();
 
-        logicW = 0;
-        logicH = 0;
+//        logicW = 0;
+//        logicH = 0;
 
         init();
     }
@@ -64,11 +64,11 @@ public class DesktopEngine implements IEngine, IState,Runnable {
 
     }
 
-    @Override
-    public void setLogicResolution(int w, int h) {
-        this.logicW = w;
-        this.logicH = h;
-    }
+//    @Override
+//    public void setLogicResolution(int w, int h) {
+//        this.logicW = w;
+//        this.logicH = h;
+//    }
 
     public void setWindowInfo(String title, int width, int height ){
         mDesktopGraphics.setWindowInfo(title,width,height);
