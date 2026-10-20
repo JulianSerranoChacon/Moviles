@@ -1,7 +1,9 @@
 package grupo01.lostonyetes.engine;
 
 public interface IAudio {
-    ISound newSound();
-    void playSound();
-    void stopSound();
+    public ISound newSound(String file);
+    public void playSound(ISound sound, boolean loop);
+    public void stopSound(ISound sound);
+    public void mute();
+    public void unmute();
 }
