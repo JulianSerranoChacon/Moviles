@@ -18,8 +18,9 @@ import java.io.InputStream;
 import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
+import grupo01.lostonyetes.engine.ScalableGraphics;
 
-public class AGraphics implements IGraphics, SurfaceHolder.Callback{
+public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callback{
     private final AssetManager assetManager;
     private final SurfaceView surfaceView;
     private final SurfaceHolder holder;
@@ -84,6 +85,7 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
         } else {
             canvas = null;
         }
+        AspectRatio();
         /*
         //cosas del scale
         calculateTransforms();
@@ -263,5 +265,35 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
         // La pantalla ya no está disponible. Apagamos la bandera inmediatamente.
         this.surfaceReady = false;
+    }
+
+    @Override
+    public int GetRealWidth() {
+        return surfaceView.getWidth();
+    }
+
+    @Override
+    public int GetRealHeight() {
+        return surfaceView.getHeight();
+    }
+
+    @Override
+    protected void scale(float x, float y) {
+        canvas.scale(x,y);
+    }
+
+    @Override
+    protected void translate(float x, float y) {
+        canvas.translate(x, y);
+    }
+    @Override
+    protected void AspectRatio(){
+        scale = Math.min((float) GetRealWidth() / logicWidth, (float) GetRealHeight() / logicHeight);
+
+        offsetX = ((float) GetRealWidth() - (logicWidth * scale)) / 2f;
+        offsetY = ((float) GetRealHeight() - (logicHeight * scale)) / 2f;
+
+        translate(offsetX, offsetY);
+        scale(scale, scale);
     }
 }

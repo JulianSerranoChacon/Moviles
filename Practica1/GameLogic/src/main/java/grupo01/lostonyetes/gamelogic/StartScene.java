@@ -29,7 +29,7 @@ public class StartScene implements IState {
     public void render() {
         //Limpiar pantalla o pintar fondo con un rectángulo azul
         this.mGraphics.setColor(0xFF0000FF); // Alpha: FF, Rojo: 00, Verde: 00, Azul: FF
-        this.mGraphics.fillRectangle(0, 0, 10000,10000);
+        this.mGraphics.fillRectangle(0, 0, 700,500);
 
         //Pintar un rectangulo verde
         this.mGraphics.setColor(0xFF00FF00); // Verde opaco

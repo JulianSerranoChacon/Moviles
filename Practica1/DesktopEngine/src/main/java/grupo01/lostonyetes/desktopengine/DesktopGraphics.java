@@ -2,6 +2,7 @@ package grupo01.lostonyetes.desktopengine;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Insets;
 import java.awt.Shape;
 import java.awt.image.BufferStrategy;
 import java.io.FileInputStream;
@@ -18,12 +19,13 @@ import javax.swing.JFrame;
 import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
+import grupo01.lostonyetes.engine.ScalableGraphics;
 
-public class DesktopGraphics implements IGraphics{
+public class DesktopGraphics extends ScalableGraphics {
 
     private JFrame myView;
     private BufferStrategy bufferStrategy;
-    private Graphics graphics2D;
+    private Graphics2D graphics2D;
 
 //    private float scale;
 //    private int dx; //traslacion en X
@@ -240,6 +242,8 @@ public class DesktopGraphics implements IGraphics{
         this.translate(this.dx, this.dy);
         //cosas del scale
         */
+
+        AspectRatio();
         return this.graphics2D != null;
     }
 
@@ -255,5 +259,40 @@ public class DesktopGraphics implements IGraphics{
 
     public void drawCircle(int cx, int cy, int radius) {
         this.graphics2D.drawOval(cx, cy, 2*radius, 2*radius);
+    }
+
+    @Override
+    public int GetRealWidth() {
+        return myView.getWidth();
+    }
+
+    @Override
+    public int GetRealHeight() {
+        return myView.getHeight();
+    }
+
+    @Override
+    protected void scale(float x, float y) {
+        this.graphics2D.scale(x,y);
+    }
+
+    @Override
+    protected void translate(float x, float y) {
+        this.graphics2D.translate(x,y);
+    }
+    @Override
+    protected void AspectRatio(){
+        Insets insets = myView.getInsets();
+
+        float tempX = ((float) GetRealWidth() - insets.left - insets.right) / logicWidth;
+        float tempY = ((float) GetRealHeight() - insets.top - insets.bottom) / logicHeight;
+
+        scale = Math.min(tempX, tempY);
+
+        offsetX = insets.left + ((((float) GetRealWidth() - insets.left - insets.right) - (logicWidth * scale)) / 2f);
+        offsetY = insets.top + ((((float) GetRealHeight() - insets.top - insets.bottom) - (logicHeight * scale)) / 2f);
+
+        translate(offsetX, offsetY);
+        scale(scale, scale);
     }
 }
