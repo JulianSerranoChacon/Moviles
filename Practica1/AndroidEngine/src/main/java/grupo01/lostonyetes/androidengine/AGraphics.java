@@ -277,12 +277,12 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
 
     @Override
     protected void scale(float x, float y) {
-        canvas.scale(x,y);
+        if(canvas != null)canvas.scale(x,y);
     }
 
     @Override
     protected void translate(float x, float y) {
-        canvas.translate(x, y);
+        if(canvas != null)canvas.translate(x, y);
     }
     @Override
     protected void AspectRatio(){
