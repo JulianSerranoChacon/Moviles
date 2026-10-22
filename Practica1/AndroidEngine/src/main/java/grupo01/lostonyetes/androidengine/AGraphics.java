@@ -176,8 +176,6 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
             this.paint.setTypeface(androidFont.getTypeface());
             this.paint.setTextSize(androidFont.getSize());
 
-            this.paint.setColor(0xFFFFFFFF); //ESTO HAY QUE CAMBIARLO, ESTA PARA PROBAR QUE SE VEA
-
             this.canvas.drawText(text, x, y, paint); // Dibuja el texto en pantalla
         }
     }
@@ -279,12 +277,12 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
 
     @Override
     protected void scale(float x, float y) {
-        canvas.scale(x,y);
+        if(canvas != null)canvas.scale(x,y);
     }
 
     @Override
     protected void translate(float x, float y) {
-        canvas.translate(x, y);
+        if(canvas != null)canvas.translate(x, y);
     }
     @Override
     protected void AspectRatio(){

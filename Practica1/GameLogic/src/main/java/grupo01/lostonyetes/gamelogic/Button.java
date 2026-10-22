@@ -1,0 +1,47 @@
+package grupo01.lostonyetes.gamelogic;
+
+import grupo01.lostonyetes.engine.IFont;
+import grupo01.lostonyetes.engine.IGraphics;
+
+public class Button {
+    int x,y;
+    int w,h;
+    int colorBackground;
+    int colorTexto;
+    IFont miFuente;
+    String texto;
+
+    public Button(int _x, int _y, int _w, int _h,
+                  int _colorBackground, int _colorTexto, IFont _miFuente, String _texto){
+        x = _x; y = _y;
+        w = _w; h = _h;
+        colorBackground = _colorBackground;
+        colorTexto = _colorTexto;
+        miFuente = _miFuente;
+        texto = _texto;
+    }
+    public void SetText(String s){
+        texto = s;
+    }
+    public void SetPos(int _x, int _y){
+        x = _x;
+        y = _y;
+    }
+    public void SetSize(int _w, int _h){
+        w = _w;
+        h = _h;
+    }
+    public void SetFuente(IFont font){
+        miFuente = font;
+    }
+
+    public void render(IGraphics graphics){
+        graphics.setColor(colorBackground);
+        graphics.fillRectangle(x,y,w,h);
+        graphics.setColor(colorTexto);
+        graphics.drawText(texto, x, y, miFuente);
+    }
+    
+    //Metodo vacio para que llamen al @Override y cada clase de boton lo customice
+    public void OnClick(){ }
+}

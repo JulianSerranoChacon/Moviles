@@ -49,7 +49,6 @@ public class AImage implements IImage {
             InputStream is = assetManager.open("images/"+filePath);
             _bitmap = BitmapFactory.decodeStream(is);
             is.close();
-
         } catch (IOException e) {
             System.err.println("Error al cargar " + filePath);
             e.printStackTrace();
