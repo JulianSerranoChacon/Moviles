@@ -183,16 +183,9 @@ public class DesktopGraphics extends ScalableGraphics {
     public void drawText(String text, int x, int y, IFont font) {
         if (font != null && this.bufferStrategy != null) {
             DesktopFont desktopFont = (DesktopFont) font;
-            Graphics graphics = this.bufferStrategy.getDrawGraphics();
+            graphics2D.setFont(desktopFont.getAwtFont());
 
-            if (graphics != null) {
-                graphics.setFont(desktopFont.getAwtFont());
-
-                setColor(0xFFFFFFFF); //ESTO HAY QUE CAMBIARLO, ESTA PARA PROBAR QUE SE VEA
-
-                graphics.drawString(text, x, y);
-                graphics.dispose();
-            }
+            graphics2D.drawString(text, x, y);
         }
     }
     @Override

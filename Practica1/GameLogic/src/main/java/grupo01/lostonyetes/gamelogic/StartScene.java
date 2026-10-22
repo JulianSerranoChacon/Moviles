@@ -43,6 +43,7 @@ public class StartScene implements IState {
         //Cargamos una fuente de texto y escribimos texto en pantalla
         IFont miFuente = this.mGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
 
+        this.mGraphics.setColor(0xFF000000);
         this.mGraphics.drawText("¡Hola Escritorio!", 50, 100, miFuente);
     }
 }
