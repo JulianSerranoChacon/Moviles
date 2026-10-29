@@ -86,6 +86,10 @@ public class DesktopGraphics extends ScalableGraphics {
         }
     }
 
+    public JFrame getMyView() {
+        return myView;
+    }
+
     public void setWindowInfo(String title, int width, int height ){
         this.myView.setTitle(title);
         setResolution(width,height);

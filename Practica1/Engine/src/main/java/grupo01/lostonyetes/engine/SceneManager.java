@@ -1,5 +1,7 @@
 package grupo01.lostonyetes.engine;
 
+import java.util.List;
+
 public class SceneManager{
     IState ActualScene;
     IState NextScene;
@@ -28,5 +30,9 @@ public class SceneManager{
             ActualScene = NextScene;
             NextScene = null;
         }
+    }
+
+    public void handleInput(List<InputEvent> events){
+        if(ActualScene != null) ActualScene.handleInput(events);
     }
 }

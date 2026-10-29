@@ -1,10 +1,14 @@
 package grupo01.lostonyetes.gamelogic;
 
+import java.util.List;
+
 import grupo01.lostonyetes.engine.IEngine;
 import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
 import grupo01.lostonyetes.engine.IState;
+import grupo01.lostonyetes.engine.InputEvent;
+import grupo01.lostonyetes.engine.InputType;
 
 public class StartScene implements IState {
     IGraphics mGraphics;
@@ -45,5 +49,15 @@ public class StartScene implements IState {
 
         this.mGraphics.setColor(0xFF000000);
         this.mGraphics.drawText("¡Hola Escritorio!", 50, 100, miFuente);
+    }
+
+    @Override
+    public void handleInput(List<InputEvent> events) {
+        for (InputEvent ev: events)
+        {
+            if(ev.getEventType() == InputType.ONCLICKED){
+                System.out.println("cacacacaca");
+            }
+        }
     }
 }

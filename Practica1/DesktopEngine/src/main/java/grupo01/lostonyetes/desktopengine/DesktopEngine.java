@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import grupo01.lostonyetes.engine.IAudio;
 import grupo01.lostonyetes.engine.IEngine;
@@ -11,12 +12,14 @@ import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
 import grupo01.lostonyetes.engine.IState;
+import grupo01.lostonyetes.engine.InputEvent;
 import grupo01.lostonyetes.engine.SceneManager;
 
 public class DesktopEngine implements IEngine, Runnable {
     DesktopGraphics mDesktopGraphics;
     DesktopAudio mDesktopAudio;
     SceneManager mSceneManager;
+    DesktopInput mInputManager;
     private Thread gameThread;
 
 //    private int logicW;
@@ -33,6 +36,7 @@ public class DesktopEngine implements IEngine, Runnable {
         mDesktopGraphics = new DesktopGraphics();
         mDesktopAudio = new DesktopAudio();
         mSceneManager = new SceneManager();
+        mInputManager = new DesktopInput(mDesktopGraphics.getMyView());
 //        logicW = 0;
 //        logicH = 0;
 
@@ -89,69 +93,6 @@ public class DesktopEngine implements IEngine, Runnable {
         gameThread.start(); // Esto dispara automáticamente el método run() en segundo plano
         mSceneManager.init();
     }
-    public void update(double dt) {
-        mSceneManager.update(dt);
-        /*
-        //muevo el cuadrado
-        x += vx * dt;
-        y += vy * dt;
-
-        // pillo las dimensiones de pantalla
-        int pantallaAncho = this.mDesktopGraphics.getWidth();
-        int pantallaAlto = this.mDesktopGraphics.getHeight();
-
-        // Si no me llegan las dimensiones me cago encima
-        if (pantallaAncho == 0 || pantallaAlto == 0) return;
-
-        //rebote eje x
-        if (x < 0) {
-            x = 0;
-            vx = Math.abs(vx); // Fuerza a que la velocidad sea positiva (va a la derecha)
-        }
-        else if ((x + w) >= pantallaAncho) {
-            x = pantallaAncho - w -2; // Lo separamos 2 píxeles de la pared para evitar bucles
-            vx = -Math.abs(vx); // Fuerza a que la velocidad sea negativa (va a la izquierda de golpe)
-        }
-
-        // rebote eje y
-        if (y < 0) {
-            y = 0;
-            vy = Math.abs(vy); // Fuerza a que la velocidad sea positiva (va hacia abajo)
-        }
-        else if ((y + h) >= pantallaAlto) {
-            y = pantallaAlto - h - 2; // Lo separamos 2 píxeles del suelo
-            vy = -Math.abs(vy); // Fuerza a que la velocidad sea negativa (va hacia arriba)
-        }
-
-         */
-    }
-    public void render() {
-        if (this.mDesktopGraphics.prepareFrame()) {
-            try {
-                this.mSceneManager.render();
-            } finally {
-                this.mDesktopGraphics.endFrame();
-            }
-        }
-        /*
-        //Limpiar pantalla o pintar fondo con un rectángulo azul
-        this.mDesktopGraphics.setColor(0xFF0000FF); // Alpha: FF, Rojo: 00, Verde: 00, Azul: FF
-        this.mDesktopGraphics.fillRectangle(0, 0, 10000,10000);
-
-        //Pintar un rectangulo verde
-        this.mDesktopGraphics.setColor(0xFF00FF00); // Verde opaco
-        this.mDesktopGraphics.fillRectangle(x, y, w, h);
-
-        //Probamos a pintar una imagen
-        IImage miImagen = this.mDesktopGraphics.newImage("CuboMinecraft.png", 50,50, w, h);
-        this.mDesktopGraphics.drawImage(miImagen);
-
-        //Cargamos una fuente de texto y escribimos texto en pantalla
-        IFont miFuente = this.mDesktopGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
-
-        this.mDesktopGraphics.drawText("¡Hola Escritorio!", 50, 100, miFuente);
-        */
-    }
 
     @Override
     public void run() {
@@ -184,8 +125,11 @@ public class DesktopEngine implements IEngine, Runnable {
                 // Actualizamos lastTime solo cuando procesamos un frame
                 lastTime = currentTime;
 
+                List<InputEvent>  events = mInputManager.getEvents();
+                mSceneManager.handleInput(events);
+
                 //Actualizacion logica con dt en segundos
-                this.update(dt);
+                mSceneManager.update(dt);
 
                 // Informe de FPS
                 frames++;
@@ -197,7 +141,13 @@ public class DesktopEngine implements IEngine, Runnable {
                 }
 
                 //Renderizado
-                this.render();
+                if (this.mDesktopGraphics.prepareFrame()) {
+                    try {
+                        this.mSceneManager.render();
+                    } finally {
+                        this.mDesktopGraphics.endFrame();
+                    }
+                }
             }
         }
     }

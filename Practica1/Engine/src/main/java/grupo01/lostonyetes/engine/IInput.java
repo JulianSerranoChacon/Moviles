@@ -4,5 +4,4 @@ import java.util.List;
 
 public interface IInput {
     public List<InputEvent> getEvents();
-    void handleEvents ();
 }
