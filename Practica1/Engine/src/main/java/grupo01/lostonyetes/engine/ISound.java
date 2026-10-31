@@ -1,4 +1,5 @@
 package grupo01.lostonyetes.engine;
 
 public interface ISound {
+    public int getIdSound();
 }

@@ -7,16 +7,34 @@ public class DesktopAudio implements IAudio {
     public  DesktopAudio(){
 
     }
+
     @Override
-    public ISound newSound() {
-        return new DesktopSound();
+    public ISound newSoundEffect(String file) {
+        return null;
     }
+
     @Override
-    public void playSound(){
+    public ISound newMusicTrack(String file) {
+        return null;
+    }
+
+    @Override
+    public void playMusicTrack() {
 
     }
+
     @Override
-    public void stopSound(){
+    public void stopMusicTrack() {
+
+    }
+
+    @Override
+    public void playSoundEffect(int id) {
+
+    }
+
+    @Override
+    public void stopSoundEffect(int id) {
 
     }
 }

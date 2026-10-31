@@ -19,6 +19,7 @@ import grupo01.lostonyetes.engine.SceneManager;
 public class AndroidEngine implements IEngine, Runnable {
     private final AssetManager assetManager;
     private final AGraphics graphics;
+    private final AAudio audioSystem;
     private Thread gameThread;
     private volatile boolean running = false;
     private SceneManager mSceneManager;
@@ -40,6 +41,7 @@ public class AndroidEngine implements IEngine, Runnable {
     public AndroidEngine(Context context){
         this.assetManager = context.getAssets();
         this.graphics = new AGraphics(context);
+        this.audioSystem = new AAudio(context);
         this.mSceneManager = new SceneManager();
 
 
@@ -78,7 +80,7 @@ public class AndroidEngine implements IEngine, Runnable {
 
     @Override
     public IAudio getAudio() {
-        return null;
+        return audioSystem;
     }
 
     @Override

@@ -2,21 +2,27 @@ package grupo01.lostonyetes.gamelogic;
 
 import java.util.List;
 
+import grupo01.lostonyetes.engine.IAudio;
 import grupo01.lostonyetes.engine.IEngine;
 import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
+import grupo01.lostonyetes.engine.ISound;
 import grupo01.lostonyetes.engine.IState;
 import grupo01.lostonyetes.engine.InputEvent;
 import grupo01.lostonyetes.engine.InputType;
 
 public class StartScene implements IState {
     IGraphics mGraphics;
+    IAudio mAudioSystem;
     IEngine mEngine;
+    ISound mSonidoPrueba;
 
     public StartScene(IEngine eng){
         mEngine = eng;
         mGraphics = eng.getGraphics();
+        mAudioSystem = eng.getAudio();
+        mSonidoPrueba = mAudioSystem.newSoundEffect("efecto-damage.wav");
     }
 
     @Override
@@ -49,6 +55,9 @@ public class StartScene implements IState {
 
         this.mGraphics.setColor(0xFF000000);
         this.mGraphics.drawText("¡Hola Escritorio!", 50, 100, miFuente);
+
+        //Prueba de efecto de sonido
+        //this.mAudioSystem.playSoundEffect(mSonidoPrueba.getIdSound());
     }
 
     @Override
