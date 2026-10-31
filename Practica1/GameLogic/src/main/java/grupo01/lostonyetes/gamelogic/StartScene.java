@@ -18,11 +18,14 @@ public class StartScene implements IState {
     IEngine mEngine;
     ISound mSonidoPrueba;
 
+    private Boolean var;
+
     public StartScene(IEngine eng){
         mEngine = eng;
         mGraphics = eng.getGraphics();
         mAudioSystem = eng.getAudio();
-        mSonidoPrueba = mAudioSystem.newSoundEffect("efecto-damage.wav");
+        mSonidoPrueba = mAudioSystem.newMusicTrack("efecto-damage.wav");
+        this.var = false;
     }
 
     @Override
@@ -33,6 +36,13 @@ public class StartScene implements IState {
     @Override
     public void update(double dt) {
 
+        //Prueba de efecto de sonido, en los primeros frames puede que no se reproduzca el sonido
+        //this.mAudioSystem.playSoundEffect(mSonidoPrueba.getIdSound(), false);
+        //Prueba de musica
+//        if (!var){
+//            this.mAudioSystem.playMusicTrack(mSonidoPrueba.getIdSound(), true);
+//            var = true;
+//        }
     }
 
     @Override
@@ -55,9 +65,6 @@ public class StartScene implements IState {
 
         this.mGraphics.setColor(0xFF000000);
         this.mGraphics.drawText("¡Hola Escritorio!", 50, 100, miFuente);
-
-        //Prueba de efecto de sonido
-        //this.mAudioSystem.playSoundEffect(mSonidoPrueba.getIdSound());
     }
 
     @Override
@@ -65,6 +72,8 @@ public class StartScene implements IState {
         for (InputEvent ev: events)
         {
             if(ev.getEventType() == InputType.ONCLICKED){
+                //Prueba de efecto de sonido
+                //this.mAudioSystem.playSoundEffect(mSonidoPrueba.getIdSound(), true);
                 System.out.println("cacacacaca");
             }
         }

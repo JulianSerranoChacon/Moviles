@@ -3,13 +3,13 @@ package grupo01.lostonyetes.androidengine;
 import grupo01.lostonyetes.engine.ISound;
 
 public class ASound implements ISound {
-    private final int idSound;
+    private final int id_Sound;
 
     public ASound(int idSound){
-        this.idSound = idSound;
+        this.id_Sound = idSound;
     }
     @Override
     public int getIdSound() {
-        return idSound;
+        return id_Sound;
     }
 }

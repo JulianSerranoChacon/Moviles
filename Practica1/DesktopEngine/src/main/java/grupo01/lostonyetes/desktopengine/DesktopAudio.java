@@ -19,17 +19,17 @@ public class DesktopAudio implements IAudio {
     }
 
     @Override
-    public void playMusicTrack() {
+    public void playMusicTrack(int id, boolean loop) {
 
     }
 
     @Override
-    public void stopMusicTrack() {
+    public void stopMusicTrack(int id) {
 
     }
 
     @Override
-    public void playSoundEffect(int id) {
+    public void playSoundEffect(int id, boolean loop) {
 
     }
 
