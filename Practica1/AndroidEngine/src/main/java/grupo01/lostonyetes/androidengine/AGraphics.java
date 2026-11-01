@@ -74,7 +74,7 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
         return surfaceView.getHeight();
     }
     @Override
-    public void SetLogicSize(int lw, int lh){
+    public void setLogicSize(int lw, int lh){
         logicWidth = lw;
         logicHeight = lh;
     }

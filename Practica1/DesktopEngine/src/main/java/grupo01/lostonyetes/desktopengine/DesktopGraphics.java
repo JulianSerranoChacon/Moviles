@@ -143,7 +143,7 @@ public class DesktopGraphics implements IGraphics {
         return myView.getHeight();
     }
     @Override
-    public void SetLogicSize(int lw, int lh){
+    public void setLogicSize(int lw, int lh){
         logicWidth = lw;
         logicHeight = lh;
     }
