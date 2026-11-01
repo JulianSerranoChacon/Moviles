@@ -148,6 +148,8 @@ public class DesktopEngine implements IEngine, Runnable {
                         this.mDesktopGraphics.endFrame();
                     }
                 }
+
+                mSceneManager.ChangeIfNextScene();
             }
         }
     }
