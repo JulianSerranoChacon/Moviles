@@ -26,6 +26,7 @@ public class StartScene implements IState {
     public StartScene(IEngine eng){
         mEngine = eng;
         mGraphics = eng.getGraphics();
+        mGraphics.SetLogicSize(700,500);
         mAudioSystem = eng.getAudio();
         mSonidoPrueba = mAudioSystem.newMusicTrack("efecto-damage.wav");
         //Cargamos una fuente de texto
