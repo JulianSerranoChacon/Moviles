@@ -29,13 +29,6 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
     // Objeto Paint nativo de Android para gestionar colores y estilos
     private final Paint paint;
     private boolean surfaceReady = false;
-
-//
-//    private float scale;
-//    private int dx; //traslacion en X
-//    private int dy; //traslacion en Y
-//    private int logicW;
-//    private int logicH;
     private int width = 0;
     private int height = 0;
 
@@ -86,13 +79,6 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
             canvas = null;
         }
         AspectRatio();
-        /*
-        //cosas del scale
-        calculateTransforms();
-        this.scale(this.scale, this.scale);
-        this.translate(this.dx, this.dy);
-        //cosas del scale
-        */
         return canvas == null;
     }
 
@@ -119,46 +105,6 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
     public void setResolution( int width, int height) {
 
     }
-//    private void calculateTransforms(){
-//        float tempW = this.surfaceView.getWidth()/this.logicW;
-//        float tempH = this.surfaceView.getHeight()/this.logicH;
-//
-//        this.scale = Math.min(tempW,tempH); // tempW < tempH ? tempW : tempH;
-//
-//        float tW = this.logicW * this.scale;
-//        float tH = this.logicH * this.scale;
-//
-//        this.dx = (int)((this.surfaceView.getWidth() - tW)/2);
-//        this.dy = (int)((this.surfaceView.getHeight() - tH)/2);
-//    }
-
-//    @Override
-//    public void scale(float sw, float sh) {
-//        this.canvas.scale(sw, sh);
-//    }
-//
-//    @Override
-//    public void translate(int dx, int dy) {
-//        this.canvas.translate(dx, dy);
-//    }
-//
-//    @Override
-//    public void restore() {
-//
-//    }
-//
-//    @Override
-//    public void save() {
-//
-//    }
-
-    /*protected int realToLogicX(int x){
-
-    }
-
-    protected int realToLogicY(int y){
-
-    }*/
     /**
      * Metodo para setear el color del pincel
      * @param colorARGB int con el color a mostrar
@@ -213,10 +159,19 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
             canvas.drawRect(x, y, x + w, y + h, this.paint);
         }
     }
-
+    /**
+     * Metodo para pintar un circulo por pantalla
+     * @param x posCenterX
+     * @param y posCenterY
+     * @param r radius
+     */
     @Override
-    public void fillCircle() {
-
+    public void fillCircle(int x, int y, int r) {
+        // Validamos que el canvas esté listo para dibujar en este frame
+        if (canvas != null) {
+            // Android dibuja circulos usando (centro en x, centro en y, radio)
+            canvas.drawCircle(x, y, r, this.paint);
+        }
     }
 
     @Override

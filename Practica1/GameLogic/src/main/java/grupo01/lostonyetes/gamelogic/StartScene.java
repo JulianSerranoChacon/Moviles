@@ -54,7 +54,7 @@ public class StartScene implements IState {
         //Pintar un rectangulo verde
         this.mGraphics.setColor(0xFF00FF00); // Verde opaco
         //this.mGraphics.fillRectangle(x, y, w, h);
-        this.mGraphics.fillRectangle(100, 100, 100, 100);
+        this.mGraphics.fillCircle(100, 100,  100);
 
         //Probamos a pintar una imagen
         IImage miImagen = this.mGraphics.newImage("CuboMinecraft.png", 50,50, 50, 50);

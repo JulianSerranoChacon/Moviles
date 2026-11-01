@@ -16,7 +16,7 @@ public interface IGraphics {
     void drawImage(IImage img);
     void fillRoundRectangle();
     void fillRectangle(int x, int y, int w, int h);
-    void fillCircle();
+    void fillCircle(int x, int y, int r);
     void drawLine();
     void drawTest();
 

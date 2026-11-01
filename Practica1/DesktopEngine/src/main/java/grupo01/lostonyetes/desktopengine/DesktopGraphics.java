@@ -26,12 +26,6 @@ public class DesktopGraphics extends ScalableGraphics {
     private JFrame myView;
     private BufferStrategy bufferStrategy;
     private Graphics2D graphics2D;
-
-//    private float scale;
-//    private int dx; //traslacion en X
-//    private int dy; //traslacion en Y
-//    private int logicW;
-//    private int logicH;
     private final Map<String, BufferedImage> imagenes = new HashMap<>();
 
     public DesktopGraphics(){
@@ -120,49 +114,7 @@ public class DesktopGraphics extends ScalableGraphics {
         // Garantiza que la zona de dibujo mida lo indicado
         this.myView.setSize(width,height);
         this.myView.setLocationRelativeTo(null); // Centra la ventana en pantalla
-//
-//        this.logicW = width;
-//        this.logicH = height;
     }
-//
-//    @Override
-//    public void scale(float sw, float sh) {
-//        ((Graphics2D) this.graphics2D).scale(sw, sh);
-//    }
-//
-//    @Override
-//    public void translate(int dx, int dy) {
-//        this.graphics2D.translate(dx, dy);
-//
-//    }
-//
-//    @Override
-//    public void restore() {
-//
-//    }
-//
-//    @Override
-//    public void save() {
-//
-//    }
-
-//    @Override
-//    public void setClip(int x, int y, int w, int h) {
-//        this.graphics2D.setClip(Shape(x,y,w,h));
-//    }
-
-//    private void calculateTransforms(){
-//        float tempW = this.myView.getWidth()/this.logicW;
-//        float tempH = this.myView.getHeight()/this.logicH;
-//
-//        this.scale = Math.min(tempW,tempH); // tempW < tempH ? tempW : tempH;
-//
-//        float tW = this.logicW * this.scale;
-//        float tH = this.logicH * this.scale;
-//
-//        this.dx = (int)((this.myView.getWidth() - tW)/2);
-//        this.dy = (int)((this.myView.getHeight() - tH)/2);
-//    }
 
     @Override
     public int getWidth() {
@@ -208,14 +160,35 @@ public class DesktopGraphics extends ScalableGraphics {
     public void fillRoundRectangle(){
         //TODO
     }
+
+    /**
+     * Metodo para pintar un rectangulo por pantalla
+     * @param x posX
+     * @param y posY
+     * @param w widht
+     * @param h height
+     */
     @Override
     public void fillRectangle(int x, int y, int w, int h){
         if (this.graphics2D != null) {
             this.graphics2D.fillRect(x, y, w, h);
         }
     }
+    
+    /**
+     * Metodo para pintar un circulo por pantalla
+     * @param x posCenterX
+     * @param y posCenterY
+     * @param r radius
+     */
     @Override
-    public void fillCircle(){
+    public void fillCircle(int x, int y, int r){
+        if (this.graphics2D != null) {
+            // La posicion que pasamos en x e y es la de la del centro del circulo,
+            // pero fillOval piensa que es la esquina superior izquierda,
+            // si queremos poder centrar el circulo en el centro debemos de restar x e y con el radio r
+            this.graphics2D.fillOval(x-r, y-r, 2*r, 2*r);
+        }
     }
     @Override
     public void drawLine(){
@@ -232,13 +205,6 @@ public class DesktopGraphics extends ScalableGraphics {
         }
         // Obtenemos el contexto gráfico para dibujar en este frame
         this.graphics2D = (Graphics2D) this.bufferStrategy.getDrawGraphics();
-        /*
-        //cosas del scale
-        calculateTransforms();
-        this.scale(this.scale, this.scale);
-        this.translate(this.dx, this.dy);
-        //cosas del scale
-        */
 
         AspectRatio();
         return this.graphics2D != null;
@@ -252,10 +218,6 @@ public class DesktopGraphics extends ScalableGraphics {
         }
         this.bufferStrategy.show();
         return !this.bufferStrategy.contentsLost();
-    }
-
-    public void drawCircle(int cx, int cy, int radius) {
-        this.graphics2D.drawOval(cx, cy, 2*radius, 2*radius);
     }
 
     @Override
