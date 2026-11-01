@@ -12,7 +12,7 @@ public interface IGraphics {
     public int getWidth();
     public int getHeight();
     void setColor(int colorARGB);
-    void drawText(String text, int x, int y, IFont font);
+    void drawText(String text, int x, int y, IFont font, boolean center);
     void drawImage(IImage img);
     void fillRoundRectangle();
     void fillRectangle(int x, int y, int w, int h);

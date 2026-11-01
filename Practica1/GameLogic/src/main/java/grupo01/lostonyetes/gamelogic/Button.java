@@ -39,7 +39,7 @@ public class Button {
         graphics.setColor(colorBackground);
         graphics.fillRectangle(x,y,w,h);
         graphics.setColor(colorTexto);
-        graphics.drawText(texto, x, y, miFuente);
+        graphics.drawText(texto, x + (w/2), y + (h/2), miFuente, true);
     }
     
     //Metodo vacio para que llamen al @Override y cada clase de boton lo customice

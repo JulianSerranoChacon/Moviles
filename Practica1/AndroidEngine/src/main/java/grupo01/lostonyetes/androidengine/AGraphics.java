@@ -114,17 +114,51 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
         this.paint.setColor(colorARGB);
     }
 
+    /**
+     * Metodo para dibujar un texto en pantalla
+     * @param text string del texto a escribir
+     * @param x posX
+     * @param y posY
+     * @param font fuente de texto
+     * @param center true = texto centrado
+     */
     @Override
-    public void drawText(String text, int x, int y, IFont font) {
+    public void drawText(String text, int x, int y, IFont font, boolean center) {
         if (font != null && this.canvas != null) {
             AFont androidFont = (AFont) font; //Convertimos IFont en AFont y creamos un nuevo AFont
 
             this.paint.setTypeface(androidFont.getTypeface());
             this.paint.setTextSize(androidFont.getSize());
 
-            this.canvas.drawText(text, x, y, paint); // Dibuja el texto en pantalla
+            if (center){
+                //centramos el texto
+                Rect rectTextBounds = new Rect();
+                this.paint.getTextBounds(text, 0, text.length(), rectTextBounds);
+
+                float centerX = x - (rectTextBounds.width()/2f) - rectTextBounds.left;
+
+                // centra el texto en la y en base a la altura TOTAL del texto
+                Paint.FontMetrics fontMetrics = this.paint.getFontMetrics();
+                float centerY = y - ((fontMetrics.descent + fontMetrics.ascent) / 2f);
+
+                // centra en la Y sin tener en cuenta que el texto se puede salir por arriba o abajo
+                // (puede ser por caracteres especiales o por mayusculas)
+                // usar este calculo puede hacer que el texto no se cuadre igual que en desktop asi que
+                // habra que ver si lo borramos
+                //float centerY = y + (rectTextBounds.height()/2f) - rectTextBounds.bottom;
+
+                this.canvas.drawText(text, centerX, centerY, paint); // Dibuja el texto centrado en pantalla
+            }
+            else
+                this.canvas.drawText(text, x, y, paint); // Dibuja el texto en pantalla
+
         }
     }
+
+    /**
+     * Metodo para dibujar una textura en pantalla
+     * @param img textura
+     */
     @Override
     public void drawImage(IImage img) {
         if (img != null && this.canvas != null){

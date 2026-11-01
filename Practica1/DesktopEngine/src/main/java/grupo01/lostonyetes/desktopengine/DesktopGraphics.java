@@ -1,9 +1,11 @@
 package grupo01.lostonyetes.desktopengine;
 
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -128,6 +130,10 @@ public class DesktopGraphics extends ScalableGraphics {
         return this.myView.getHeight();
     }
 
+    /**
+     * Metodo para setear el color del pincel
+     * @param colorARGB int con el color a mostrar
+     */
     @Override
     public void setColor(int colorARGB){
         if (this.graphics2D != null) {
@@ -135,20 +141,44 @@ public class DesktopGraphics extends ScalableGraphics {
             this.graphics2D.setColor(new java.awt.Color(colorARGB, true));
         }
     }
+
+    /**
+     * Metodo para dibujar un texto en pantalla
+     * @param text string del texto a escribir
+     * @param x posX
+     * @param y posY
+     * @param font fuente de texto
+     * @param center true = texto centrado
+     */
     @Override
-    public void drawText(String text, int x, int y, IFont font) {
+    public void drawText(String text, int x, int y, IFont font, boolean center) {
         if (font != null && this.bufferStrategy != null) {
             DesktopFont desktopFont = (DesktopFont) font;
-            graphics2D.setFont(desktopFont.getAwtFont());
+            this.graphics2D.setFont(desktopFont.getAwtFont());
 
-            graphics2D.drawString(text, x, y);
+            if (center){
+                FontMetrics metrics = this.graphics2D.getFontMetrics(desktopFont.getAwtFont());
+                Rectangle2D textBounds = metrics.getStringBounds(text, this.graphics2D);
+
+                int centerX = x - ((int) textBounds.getWidth()/2) - (int) textBounds.getMinX();
+                int centerY = y - ((int) textBounds.getHeight()/2) - (int) textBounds.getMinY();
+
+                this.graphics2D.drawString(text, centerX, centerY); // Dibuja el texto centrado en pantalla
+            }
+            else
+                this.graphics2D.drawString(text, x, y); // Dibuja el texto en pantalla
         }
     }
+
+    /**
+     * Metodo para dibujar una textura en pantalla
+     * @param img textura
+     */
     @Override
     public void drawImage(IImage img){
         DesktopImage Img = (DesktopImage) img;
         if (Img.getBufferedImage() != null) {
-            graphics2D.drawImage(
+            this.graphics2D.drawImage(
                     Img.getBufferedImage(),
                     Img.getPosX(), Img.getPosY(),
                     Img.getWidth(), Img.getHeight(),
@@ -174,7 +204,7 @@ public class DesktopGraphics extends ScalableGraphics {
             this.graphics2D.fillRect(x, y, w, h);
         }
     }
-    
+
     /**
      * Metodo para pintar un circulo por pantalla
      * @param x posCenterX

@@ -17,6 +17,9 @@ public class StartScene implements IState {
     IAudio mAudioSystem;
     IEngine mEngine;
     ISound mSonidoPrueba;
+    IFont mFuentePrueba;
+
+    Button mBotonPrueba;
 
     private Boolean var;
 
@@ -25,6 +28,10 @@ public class StartScene implements IState {
         mGraphics = eng.getGraphics();
         mAudioSystem = eng.getAudio();
         mSonidoPrueba = mAudioSystem.newMusicTrack("efecto-damage.wav");
+        //Cargamos una fuente de texto
+        mFuentePrueba = mGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
+        mBotonPrueba = new Button(200, 200, 100, 50,
+                0xFF00FF00, 0xFF000000, mFuentePrueba, "Boton magico sii");
         this.var = false;
     }
 
@@ -60,11 +67,11 @@ public class StartScene implements IState {
         IImage miImagen = this.mGraphics.newImage("CuboMinecraft.png", 50,50, 50, 50);
         this.mGraphics.drawImage(miImagen);
 
-        //Cargamos una fuente de texto y escribimos texto en pantalla
-        IFont miFuente = this.mGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
-
+        //Escribimos texto en pantalla
         this.mGraphics.setColor(0xFF000000);
-        this.mGraphics.drawText("¡Hola Escritorio!", 50, 100, miFuente);
+        this.mGraphics.drawText("¡Hola Mundo!", 150, 100, this.mFuentePrueba, true);
+
+        this.mBotonPrueba.render(this.mGraphics);
     }
 
     @Override
