@@ -25,8 +25,8 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     private boolean surfaceReady = false;
     private int width = 0;
     private int height = 0;
-    private int logicWidth;
-    private int logicHeight;
+    private int logicWidth = -1;
+    private int logicHeight = -1;
     private float offsetX, offsetY, scale;
 
     final int WIDTH = 800;
@@ -48,8 +48,6 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
         this.paint = new Paint();
         // Configuramos el estilo por defecto a RELLENO (Fill)
         this.paint.setStyle(Paint.Style.FILL);
-        logicHeight = HEIGHT;
-        logicWidth = WIDTH;
     }
 
     /**
@@ -277,12 +275,14 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     }
 
     protected void AspectRatio(){
-        scale = Math.min((float) getRealWidth() / logicWidth, (float) getRealHeight() / logicHeight);
+        if(logicWidth > 0 && logicHeight > 0 ){
+            scale = Math.min((float) getRealWidth() / logicWidth, (float) getRealHeight() / logicHeight);
 
-        offsetX = ((float) getRealWidth() - (logicWidth * scale)) / 2f;
-        offsetY = ((float) getRealHeight() - (logicHeight * scale)) / 2f;
+            offsetX = ((float) getRealWidth() - (logicWidth * scale)) / 2f;
+            offsetY = ((float) getRealHeight() - (logicHeight * scale)) / 2f;
 
-        translate(offsetX, offsetY);
-        scale(scale, scale);
+            translate(offsetX, offsetY);
+            scale(scale, scale);
+        }
     }
 }
