@@ -11,6 +11,7 @@ public interface IGraphics {
 //    //public void setClip(int x, int y, int w, int h);
     public int getWidth();
     public int getHeight();
+    public void SetLogicSize(int x, int y);
     void setColor(int colorARGB);
     void drawText(String text, int x, int y, IFont font, boolean center);
     void drawImage(IImage img);

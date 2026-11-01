@@ -1,10 +1,8 @@
 package grupo01.lostonyetes.desktopengine;
 
 import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
-import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.io.FileInputStream;
@@ -21,14 +19,17 @@ import javax.swing.JFrame;
 import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
-import grupo01.lostonyetes.engine.ScalableGraphics;
 
-public class DesktopGraphics extends ScalableGraphics {
+public class DesktopGraphics implements IGraphics {
 
     private JFrame myView;
     private BufferStrategy bufferStrategy;
     private Graphics2D graphics2D;
     private final Map<String, BufferedImage> imagenes = new HashMap<>();
+
+    private int logicWidth = -1;
+    private int logicHeight = -1;
+    private float offsetX, offsetY, scale;
 
     public DesktopGraphics(){
         this.myView = new JFrame();
@@ -121,15 +122,26 @@ public class DesktopGraphics extends ScalableGraphics {
     @Override
     public int getWidth() {
         // Devuelve el ancho útil del canvas de dibujo, no de la ventana entera
-        return this.myView.getWidth();
+        return logicWidth;
     }
 
     @Override
     public int getHeight() {
         // Devuelve el ancho útil del canvas de dibujo, no de la ventana entera
-        return this.myView.getHeight();
+        return logicHeight;
     }
 
+    private int getRealWidth() {
+        return myView.getWidth();
+    }
+    private int getRealHeight() {
+        return myView.getHeight();
+    }
+    @Override
+    public void SetLogicSize(int lw, int lh){
+        logicWidth = lw;
+        logicHeight = lh;
+    }
     /**
      * Metodo para setear el color del pincel
      * @param colorARGB int con el color a mostrar
@@ -249,39 +261,27 @@ public class DesktopGraphics extends ScalableGraphics {
         this.bufferStrategy.show();
         return !this.bufferStrategy.contentsLost();
     }
-
-    @Override
-    public int GetRealWidth() {
-        return myView.getWidth();
-    }
-
-    @Override
-    public int GetRealHeight() {
-        return myView.getHeight();
-    }
-
-    @Override
     protected void scale(float x, float y) {
         this.graphics2D.scale(x,y);
     }
 
-    @Override
     protected void translate(float x, float y) {
         this.graphics2D.translate(x,y);
     }
-    @Override
     protected void AspectRatio(){
-        Insets insets = myView.getInsets();
+        if(logicWidth > 0 && logicHeight > 0){
+            Insets insets = myView.getInsets();
 
-        float tempX = ((float) GetRealWidth() - insets.left - insets.right) / logicWidth;
-        float tempY = ((float) GetRealHeight() - insets.top - insets.bottom) / logicHeight;
+            float tempX = ((float) getRealWidth() - insets.left - insets.right) / logicWidth;
+            float tempY = ((float) getRealHeight() - insets.top - insets.bottom) / logicHeight;
 
-        scale = Math.min(tempX, tempY);
+            scale = Math.min(tempX, tempY);
 
-        offsetX = insets.left + ((((float) GetRealWidth() - insets.left - insets.right) - (logicWidth * scale)) / 2f);
-        offsetY = insets.top + ((((float) GetRealHeight() - insets.top - insets.bottom) - (logicHeight * scale)) / 2f);
+            offsetX = insets.left + ((((float) getRealWidth() - insets.left - insets.right) - (logicWidth * scale)) / 2f);
+            offsetY = insets.top + ((((float) getRealHeight() - insets.top - insets.bottom) - (logicHeight * scale)) / 2f);
 
-        translate(offsetX, offsetY);
-        scale(scale, scale);
+            translate(offsetX, offsetY);
+            scale(scale, scale);
+        }
     }
 }

@@ -2,8 +2,6 @@ package grupo01.lostonyetes.androidengine;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -12,15 +10,11 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IImage;
-import grupo01.lostonyetes.engine.ScalableGraphics;
 
-public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callback{
+public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     private final AssetManager assetManager;
     private final SurfaceView surfaceView;
     private final SurfaceHolder holder;
@@ -31,7 +25,12 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
     private boolean surfaceReady = false;
     private int width = 0;
     private int height = 0;
+    private int logicWidth = -1;
+    private int logicHeight = -1;
+    private float offsetX, offsetY, scale;
 
+    final int WIDTH = 800;
+    final int HEIGHT = 600;
     /**
      * motor debe recibir el contexto de la actividad
      * @param context la Activity que inicializa el juego
@@ -64,6 +63,19 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
 
     @Override
     public int getHeight() { return this.height; }
+
+    int getRealWidth() {
+        return surfaceView.getWidth();
+    }
+
+    int getRealHeight() {
+        return surfaceView.getHeight();
+    }
+    @Override
+    public void SetLogicSize(int lw, int lh){
+        logicWidth = lw;
+        logicHeight = lh;
+    }
 
     public boolean isSurfaceReady() {
         return surfaceReady;
@@ -253,34 +265,24 @@ public class AGraphics extends ScalableGraphics implements SurfaceHolder.Callbac
         // La pantalla ya no está disponible. Apagamos la bandera inmediatamente.
         this.surfaceReady = false;
     }
-
-    @Override
-    public int GetRealWidth() {
-        return surfaceView.getWidth();
-    }
-
-    @Override
-    public int GetRealHeight() {
-        return surfaceView.getHeight();
-    }
-
-    @Override
     protected void scale(float x, float y) {
         if(canvas != null)canvas.scale(x,y);
     }
 
-    @Override
+
     protected void translate(float x, float y) {
         if(canvas != null)canvas.translate(x, y);
     }
-    @Override
+
     protected void AspectRatio(){
-        scale = Math.min((float) GetRealWidth() / logicWidth, (float) GetRealHeight() / logicHeight);
+        if(logicWidth > 0 && logicHeight > 0 ){
+            scale = Math.min((float) getRealWidth() / logicWidth, (float) getRealHeight() / logicHeight);
 
-        offsetX = ((float) GetRealWidth() - (logicWidth * scale)) / 2f;
-        offsetY = ((float) GetRealHeight() - (logicHeight * scale)) / 2f;
+            offsetX = ((float) getRealWidth() - (logicWidth * scale)) / 2f;
+            offsetY = ((float) getRealHeight() - (logicHeight * scale)) / 2f;
 
-        translate(offsetX, offsetY);
-        scale(scale, scale);
+            translate(offsetX, offsetY);
+            scale(scale, scale);
+        }
     }
 }
