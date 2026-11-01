@@ -10,6 +10,6 @@ public class ASound implements ISound {
     }
     @Override
     public int getIdSound() {
-        return id_Sound;
+        return this.id_Sound;
     }
 }

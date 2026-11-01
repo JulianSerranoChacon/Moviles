@@ -185,6 +185,8 @@ public class AndroidEngine implements IEngine, Runnable {
 */
             // Pintamos el frame
             this.render();
+
+            mSceneManager.ChangeIfNextScene();
         }
     }
 }

@@ -27,21 +27,16 @@ public class DesktopGraphics implements IGraphics {
     private Graphics2D graphics2D;
     private final Map<String, BufferedImage> imagenes = new HashMap<>();
 
-    private int logicWidth;
-    private int logicHeight;
+    private int logicWidth = -1;
+    private int logicHeight = -1;
     private float offsetX, offsetY, scale;
-
-    final int WIDTH = 800;
-    final int HEIGHT = 600;
 
     public DesktopGraphics(){
         this.myView = new JFrame();
 
         this.myView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.myView.setSize(WIDTH, HEIGHT);
-        this.logicHeight = WIDTH;
-        this.logicWidth = HEIGHT;
+        this.myView.setSize(800, 600);
         this.myView.setVisible(true);
 
         // Intentamos crear el buffer strategy con 2 buffers.
@@ -274,17 +269,19 @@ public class DesktopGraphics implements IGraphics {
         this.graphics2D.translate(x,y);
     }
     protected void AspectRatio(){
-        Insets insets = myView.getInsets();
+        if(logicWidth > 0 && logicHeight > 0){
+            Insets insets = myView.getInsets();
 
-        float tempX = ((float) getRealWidth() - insets.left - insets.right) / logicWidth;
-        float tempY = ((float) getRealHeight() - insets.top - insets.bottom) / logicHeight;
+            float tempX = ((float) getRealWidth() - insets.left - insets.right) / logicWidth;
+            float tempY = ((float) getRealHeight() - insets.top - insets.bottom) / logicHeight;
 
-        scale = Math.min(tempX, tempY);
+            scale = Math.min(tempX, tempY);
 
-        offsetX = insets.left + ((((float) getRealWidth() - insets.left - insets.right) - (logicWidth * scale)) / 2f);
-        offsetY = insets.top + ((((float) getRealHeight() - insets.top - insets.bottom) - (logicHeight * scale)) / 2f);
+            offsetX = insets.left + ((((float) getRealWidth() - insets.left - insets.right) - (logicWidth * scale)) / 2f);
+            offsetY = insets.top + ((((float) getRealHeight() - insets.top - insets.bottom) - (logicHeight * scale)) / 2f);
 
-        translate(offsetX, offsetY);
-        scale(scale, scale);
+            translate(offsetX, offsetY);
+            scale(scale, scale);
+        }
     }
 }
