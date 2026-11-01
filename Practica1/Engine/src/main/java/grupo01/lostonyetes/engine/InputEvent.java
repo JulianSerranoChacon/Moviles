@@ -4,11 +4,11 @@ import grupo01.lostonyetes.engine.InputType;
 
 public class InputEvent{
 
-    int x, y;
+    float x, y;
     int id;
     InputType type;
 
-    public InputEvent(int _x, int _y, InputType _type, int id){
+    public InputEvent(float _x, float _y, InputType _type, int id){
         x = _x;
         y = _y;
         type = _type;
@@ -23,12 +23,12 @@ public class InputEvent{
     }
 
 
-    public int getPosX() {
+    public float getPosX() {
         return x;
     }
 
 
-    public int getPosY() {
+    public float getPosY() {
         return y;
     }
 }

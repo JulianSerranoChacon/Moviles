@@ -78,7 +78,7 @@ public class StartScene implements IState {
     public void handleInput(List<InputEvent> events) {
         for (InputEvent ev: events)
         {
-            if(ev.getEventType() == InputType.ONCLICKED){
+            if(ev.getEventType() == InputType.ONTOUCHDOWN){
                 //Prueba de efecto de sonido
                 //this.mAudioSystem.playSoundEffect(mSonidoPrueba.getIdSound(), true);
                 System.out.println("cacacacaca");

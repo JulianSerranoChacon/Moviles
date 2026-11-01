@@ -3,7 +3,6 @@ package grupo01.lostonyetes.desktopengine;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -42,7 +41,7 @@ public class DesktopInput implements IInput, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        InputEvent ev = new InputEvent(mouseEvent.getX(),mouseEvent.getY(), InputType.ONCLICKED,0);
+        InputEvent ev = new InputEvent(mouseEvent.getX(),mouseEvent.getY(), InputType.ONTOUCHDOWN,0);
 
         synchronized (this) {
             eventsToHandled.add(ev);

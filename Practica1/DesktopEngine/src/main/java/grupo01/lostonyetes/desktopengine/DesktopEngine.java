@@ -105,7 +105,6 @@ public class DesktopEngine implements IEngine, Runnable {
                 return;
             }
         }
-
         // Para limitar a 60 FPS
         final double NANO_PER_FRAME = 1000000000.0 / 60.0;
         long lastTime = System.nanoTime();
@@ -130,7 +129,7 @@ public class DesktopEngine implements IEngine, Runnable {
 
                 //Actualizacion logica con dt en segundos
                 mSceneManager.update(dt);
-
+                /*
                 // Informe de FPS
                 frames++;
                 if (currentTime - prevTime >= 1000000000L) {
@@ -139,6 +138,7 @@ public class DesktopEngine implements IEngine, Runnable {
                     frames = 0;
                     prevTime = currentTime;
                 }
+                */
 
                 //Renderizado
                 if (this.mDesktopGraphics.prepareFrame()) {
