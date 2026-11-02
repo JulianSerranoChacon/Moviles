@@ -1,5 +1,6 @@
 package grupo01.lostonyetes.gamelogic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import grupo01.lostonyetes.engine.IAudio;
@@ -12,7 +13,7 @@ import grupo01.lostonyetes.engine.IState;
 import grupo01.lostonyetes.engine.InputEvent;
 import grupo01.lostonyetes.engine.InputType;
 
-public class StartScene implements IState {
+public class StartScene extends LogicScene {
     IGraphics mGraphics;
     IAudio mAudioSystem;
     IEngine mEngine;
@@ -21,9 +22,12 @@ public class StartScene implements IState {
 
     Button mBotonPrueba;
 
+    List<GameObject> gameObjectList;
+
     private Boolean var;
 
     public StartScene(IEngine eng){
+        super(eng);
         mEngine = eng;
         mGraphics = eng.getGraphics();
         mAudioSystem = eng.getAudio();
@@ -33,8 +37,9 @@ public class StartScene implements IState {
         mBotonPrueba = new Button(200, 200, 100, 50,
                 0xFF00FF00, 0xFF000000, mFuentePrueba, "Boton magico sii");
         this.var = false;
-    }
 
+    }
+/*
     @Override
     public void init() {
 
@@ -84,5 +89,5 @@ public class StartScene implements IState {
                 System.out.println("cacacacaca");
             }
         }
-    }
+    }*/
 }

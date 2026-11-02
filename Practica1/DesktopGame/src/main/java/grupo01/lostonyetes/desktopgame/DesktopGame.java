@@ -12,7 +12,7 @@ public class DesktopGame {
 
         engine = new DesktopEngine();
 
-        engine.setWindowInfo("Los tonyetes",800 ,600);
+        engine.setWindowInfo("Los tonyetes",1920 ,1080);
 
         logic = new GameLogic(engine);
     }

@@ -12,7 +12,7 @@ import grupo01.lostonyetes.engine.IState;
 import grupo01.lostonyetes.engine.InputEvent;
 import grupo01.lostonyetes.engine.InputType;
 
-public class GameLevelScene implements IState {
+public class GameLevelScene extends LogicScene {
     IGraphics mGraphics;
     IAudio mAudioSystem;
     IEngine mEngine;
@@ -26,11 +26,11 @@ public class GameLevelScene implements IState {
     private Boolean var;
 
     public GameLevelScene(IEngine eng){
+        super(eng);
         mEngine = eng;
-        mGraphics = eng.getGraphics();
         mAudioSystem = eng.getAudio();
         mSonidoPrueba = mAudioSystem.newMusicTrack("efecto-damage.wav");
-
+/*
         //Cargamos el fondo del nivel
         //mBackgorund = this.mGraphics.newImage("fondo.png", 0,0, mGraphics.getWidth(), mGraphics.getHeight());
 
@@ -38,9 +38,9 @@ public class GameLevelScene implements IState {
         mFuentePrueba = mGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
         mBotonPrueba = new Button(200, 200, 100, 50,
                 0xFF00FF00, 0xFF000000, mFuentePrueba, "Boton magico sii");
-        this.var = false;
+        this.var = false;*/
     }
-
+/*
     @Override
     public void init() {
 
@@ -92,5 +92,5 @@ public class GameLevelScene implements IState {
                 System.out.println("cacacacaca");
             }
         }
-    }
+    }*/
 }

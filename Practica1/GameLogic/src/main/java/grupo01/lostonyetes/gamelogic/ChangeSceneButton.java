@@ -1,10 +1,15 @@
 package grupo01.lostonyetes.gamelogic;
 
+import java.util.List;
+
 import grupo01.lostonyetes.engine.IEngine;
 import grupo01.lostonyetes.engine.IFont;
+import grupo01.lostonyetes.engine.IGraphics;
 import grupo01.lostonyetes.engine.IState;
+import grupo01.lostonyetes.engine.InputEvent;
+import grupo01.lostonyetes.engine.InputType;
 
-public class ChangeSceneButton extends Button {
+public class ChangeSceneButton extends Button implements GameObject {
 
     private IEngine eng;
     private IState scene;
@@ -19,7 +24,29 @@ public class ChangeSceneButton extends Button {
     }
 
     @Override
-    public void OnClick(){
-        this.eng.setScene(this.scene);
+    public void init() {
+
+    }
+
+    @Override
+    public void update(double dt) {
+
+    }
+
+    @Override
+    public void render(IGraphics graphics) {
+
+        graphics.setColor(0xFF000000);
+        super.render(graphics);
+
+    }
+
+    @Override
+    public void handleInput(List<InputEvent> events) {
+        for(InputEvent ev : events){
+            if(ev.getEventType() == InputType.ONRELEASE && checkIfPressed((int)ev.getPosX(),(int)ev.getPosY())){
+                this.eng.setScene(this.scene);
+            }
+        }
     }
 }

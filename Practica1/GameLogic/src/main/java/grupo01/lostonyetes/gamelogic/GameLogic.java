@@ -7,7 +7,7 @@ public class GameLogic {
     public GameLogic(IEngine engine){
         mEngine = engine;
         mEngine.getGraphics().setLogicSize(1920, 1080);
-        GameLevelScene mScene = new GameLevelScene(engine);
+        MainMenuScene mScene = new MainMenuScene(engine);
         mEngine.setScene(mScene);
     }
 }

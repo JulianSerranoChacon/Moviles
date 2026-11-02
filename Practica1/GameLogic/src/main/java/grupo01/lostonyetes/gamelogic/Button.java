@@ -1,9 +1,12 @@
 package grupo01.lostonyetes.gamelogic;
 
+import java.util.List;
+
 import grupo01.lostonyetes.engine.IFont;
 import grupo01.lostonyetes.engine.IGraphics;
+import grupo01.lostonyetes.engine.InputEvent;
 
-public class Button {
+public class Button{
     int x,y;
     int w,h;
     int colorBackground;
@@ -41,7 +44,9 @@ public class Button {
         graphics.setColor(colorTexto);
         graphics.drawText(texto, x + (w/2), y + (h/2), miFuente, true);
     }
-    
-    //Metodo vacio para que llamen al @Override y cada clase de boton lo customice
-    public void OnClick(){ }
+
+    public boolean checkIfPressed(int _x, int _y) {
+        return (_x >= this.x && _x < this.x + this.w) &&
+                (_y >= this.y && _y < this.y + this.h);
+    }
 }
