@@ -76,6 +76,10 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
         logicWidth = lw;
         logicHeight = lh;
     }
+    @Override
+    public int getLogicX(int x) {return (int)((x - offsetX) / scale);}
+    @Override
+    public int getLogicY(int y) {return (int)((y - offsetY) / scale);}
 
     public boolean isSurfaceReady() {
         return surfaceReady;

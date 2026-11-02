@@ -142,6 +142,10 @@ public class DesktopGraphics implements IGraphics {
         logicWidth = lw;
         logicHeight = lh;
     }
+    @Override
+    public int getLogicX(int x) {return (int)((x - offsetX) / scale);}
+    @Override
+    public int getLogicY(int y) {return (int)((y - offsetY) / scale);}
     /**
      * Metodo para setear el color del pincel
      * @param colorARGB int con el color a mostrar
