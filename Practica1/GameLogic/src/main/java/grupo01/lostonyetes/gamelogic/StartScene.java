@@ -34,7 +34,7 @@ public class StartScene extends LogicScene {
         mSonidoPrueba = mAudioSystem.newMusicTrack("efecto-damage.wav");
         //Cargamos una fuente de texto
         mFuentePrueba = mGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
-        mBotonPrueba = new Button(200, 200, 100, 50,
+        mBotonPrueba = new Button(200, 200, 100, 50, 3,
                 0xFF00FF00, 0xFF000000, mFuentePrueba, "Boton magico sii");
         this.var = false;
 

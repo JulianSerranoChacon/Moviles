@@ -189,8 +189,11 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     }
 
     @Override
-    public void fillRoundRectangle() {
-
+    public void fillRoundRectangle(float x, float y, float w, float h, float arc) {
+        if (canvas != null) {
+            // En Android, drawRoundRect recibe (left, top, right, bottom, rx, ry, paint)
+            canvas.drawRoundRect(x, y, x + w, y + h, arc, arc, this.paint);
+        }
     }
 
     /**
@@ -232,6 +235,24 @@ public class AGraphics implements IGraphics, SurfaceHolder.Callback{
     @Override
     public void drawTest() {
 
+    }
+
+    @Override
+    public void clear() {
+        // Si ya hay un canvas abierto en el frame actual, limpiamos directo
+        if (this.canvas != null) {
+            this.canvas.drawColor(android.graphics.Color.TRANSPARENT, android.graphics.PorterDuff.Mode.SRC);
+            return;
+        }
+
+        // Si la lógica llama a clear() fuera del ciclo normal de renderizado:
+        if (surfaceReady && holder.getSurface().isValid()) {
+            Canvas c = holder.lockCanvas();
+            if (c != null) {
+                c.drawColor(android.graphics.Color.TRANSPARENT, android.graphics.PorterDuff.Mode.SRC);
+                holder.unlockCanvasAndPost(c);
+            }
+        }
     }
 
     /**

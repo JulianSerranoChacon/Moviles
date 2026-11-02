@@ -203,10 +203,21 @@ public class DesktopGraphics implements IGraphics {
         }
     }
     @Override
-    public void fillRoundRectangle(){
-        //TODO
-    }
+    public void fillRoundRectangle(float x, float y, float w, float h, float arc) {
+        if (this.graphics2D != null) {
+            // Multiplicamos arc por 2 para pasar de radio (Android) a diámetro (Graphics2D)
+            int arcDiameter = Math.round(arc * 2);
 
+            this.graphics2D.fillRoundRect(
+                    Math.round(x),
+                    Math.round(y),
+                    Math.round(w),
+                    Math.round(h),
+                    arcDiameter,
+                    arcDiameter
+            );
+        }
+    }
     /**
      * Metodo para pintar un rectangulo por pantalla
      * @param x posX
@@ -243,6 +254,15 @@ public class DesktopGraphics implements IGraphics {
     @Override
     public void drawTest(){
         //TODO
+    }
+
+    @Override
+    public void clear() {
+        if (this.graphics2D != null) {
+
+            // Pintamos el fondo de negro (o el color que prefieras para tu lienzo)
+            this.graphics2D.clearRect(0,0,getWidth(),getHeight());
+        }
     }
 
     public boolean prepareFrame() {

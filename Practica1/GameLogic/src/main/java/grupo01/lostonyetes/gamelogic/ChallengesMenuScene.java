@@ -23,9 +23,9 @@ public class ChallengesMenuScene implements IState {
         GameLevelScene mGameScene = new GameLevelScene(eng);
 
         mFuente = mGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
-        mBotonJugar = new ChangeSceneButton(200, 200, 100, 50,
+        mBotonJugar = new ChangeSceneButton(200, 200, 100, 50,30,
                 0xFFFF0000, 0xFF000000, mFuente, "JUGAR", eng, mGameScene);
-        mBotonRetos = new ChangeSceneButton(200, 300, 100, 50,
+        mBotonRetos = new ChangeSceneButton(200, 300, 100, 50,30,
                 0xFFFF0000, 0xFF000000, mFuente, "RETOS", eng, mGameScene);
     }
 

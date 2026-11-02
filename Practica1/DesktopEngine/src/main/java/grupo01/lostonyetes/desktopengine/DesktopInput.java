@@ -18,11 +18,14 @@ public class DesktopInput implements IInput, MouseListener {
 
     MouseListener mListener;
 
-    public DesktopInput(JFrame view){
+    DesktopEngine eng;
+
+    public DesktopInput(JFrame view, DesktopEngine _eng){
         this.eventList = new ArrayList<>();
         this.eventsToHandled = new ArrayList<>();
         // Le dices a la ventana de escritorio: "Escucha los clics usando esta misma clase"
         view.addMouseListener(this);
+        this.eng = _eng;
     }
 
     @Override
@@ -41,7 +44,10 @@ public class DesktopInput implements IInput, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        InputEvent ev = new InputEvent(mouseEvent.getX(),mouseEvent.getY(), InputType.ONTOUCHDOWN,0);
+        int x = eng.getGraphics().getLogicX(mouseEvent.getX());
+
+        int y = eng.getGraphics().getLogicY(mouseEvent.getY());
+        InputEvent ev = new InputEvent(x,y, InputType.ONTOUCHDOWN,0);
 
         synchronized (this) {
             eventsToHandled.add(ev);
@@ -50,7 +56,11 @@ public class DesktopInput implements IInput, MouseListener {
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        InputEvent ev = new InputEvent(mouseEvent.getX(),mouseEvent.getY(), InputType.ONPRESSED,0);
+
+        int x = eng.getGraphics().getLogicX(mouseEvent.getX());
+
+        int y = eng.getGraphics().getLogicY(mouseEvent.getY());
+        InputEvent ev = new InputEvent(x,y, InputType.ONPRESSED,0);
 
         synchronized (this) {
             eventsToHandled.add(ev);
@@ -59,7 +69,11 @@ public class DesktopInput implements IInput, MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-        InputEvent ev = new InputEvent(mouseEvent.getX(),mouseEvent.getY(), InputType.ONRELEASE,0);
+
+        int x = eng.getGraphics().getLogicX(mouseEvent.getX());
+
+        int y = eng.getGraphics().getLogicY(mouseEvent.getY());
+        InputEvent ev = new InputEvent(x,y, InputType.ONRELEASE,0);
 
         synchronized (this) {
             eventsToHandled.add(ev);

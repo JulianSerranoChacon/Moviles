@@ -46,7 +46,7 @@ public class AndroidEngine implements IEngine, Runnable {
         this.graphics = new AGraphics(context);
         this.audioSystem = new AAudio(context);
         this.mSceneManager = new SceneManager();
-        this.inputSystem = new AInput(this.graphics.getView());
+        this.inputSystem = new AInput(this.graphics.getView(),this);
 
         System.out.println("A");
         // Arrancamos el motor e inicializamos el hilo inmediatamente

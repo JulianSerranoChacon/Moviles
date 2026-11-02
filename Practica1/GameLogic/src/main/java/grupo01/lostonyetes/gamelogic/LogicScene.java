@@ -33,7 +33,7 @@ public class LogicScene implements IState {
     @Override
     public void render() {
         //Escribimos texto en pantalla
-
+        mGraphics.clear();
         for(GameObject g : gameObjectList)
             g.render(mGraphics);
     }

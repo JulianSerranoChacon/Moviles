@@ -26,14 +26,14 @@ public class MainMenuScene extends LogicScene {
 
         IFont mFuente = mGraphics.newFont("Roboto-Regular.ttf", 30f, false, false);
 
-        TextObject text = new TextObject(mFuente, "Super Jet Pack",300,100);
+        TextObject text = new TextObject(mFuente, "Super Jet Pack",760,300);
         gameObjectList.add(text);
 
-        ChangeSceneButton mBotonJugar = new ChangeSceneButton(200, 200, 100, 50,
+        ChangeSceneButton mBotonJugar = new ChangeSceneButton(760, 400, 300, 150, 15,
                 0xFFFF0000, 0xFF000000, mFuente, "JUGAR", eng, mGameScene);
         gameObjectList.add(mBotonJugar);
 
-        mBotonRetos = new ChangeSceneButton(200, 300, 100, 50,
+        mBotonRetos = new ChangeSceneButton(760, 700, 300, 150,15,
                 0xFFFF0000, 0xFF000000, mFuente, "RETOS", eng, mGameScene);
         gameObjectList.add(mBotonRetos);
     }

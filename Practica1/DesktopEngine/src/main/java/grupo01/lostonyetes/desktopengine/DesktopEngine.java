@@ -36,7 +36,7 @@ public class DesktopEngine implements IEngine, Runnable {
         mDesktopGraphics = new DesktopGraphics();
         mDesktopAudio = new DesktopAudio();
         mSceneManager = new SceneManager();
-        mInputManager = new DesktopInput(mDesktopGraphics.getMyView());
+        mInputManager = new DesktopInput(mDesktopGraphics.getMyView(),this);
 //        logicW = 0;
 //        logicH = 0;
 
@@ -96,7 +96,7 @@ public class DesktopEngine implements IEngine, Runnable {
 
     @Override
     public void run() {
-        // Espera activa limpia hasta que la pantalla este lista
+        // Espera activa limpia hasta que la pantalla esté lista
         while (this.running && !this.mDesktopGraphics.isRenderable()) {
             try {
                 Thread.sleep(10);
@@ -105,52 +105,53 @@ public class DesktopEngine implements IEngine, Runnable {
                 return;
             }
         }
-        // Para limitar a 60 FPS
-        final double NANO_PER_FRAME = 1000000000.0 / 60.0;
+
         long lastTime = System.nanoTime();
         long prevTime = lastTime; // Informes de FPS
         int frames = 0;
 
-        // Bucle de juego principal
+        // Bucle de juego principal a FPS ilimitados
         while (running) {
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastTime;
 
-            // Solo procesamos frame si ha transcurrido el tiempo limite (1/60 segundos)
-            if (nanoElapsedTime >= NANO_PER_FRAME) {
-                // Delta time expresado en segundos (ej. 0.0166 s)
-                double dt = nanoElapsedTime / 1000000000.0;
-
-                // Actualizamos lastTime solo cuando procesamos un frame
-                lastTime = currentTime;
-
-                List<InputEvent>  events = mInputManager.getEvents();
-                mSceneManager.handleInput(events);
-
-                //Actualizacion logica con dt en segundos
-                mSceneManager.update(dt);
-                /*
-                // Informe de FPS
-                frames++;
-                if (currentTime - prevTime >= 1000000000L) {
-                    long fps = (frames * 1000000000L) / (currentTime - prevTime);
-                    System.out.println(fps + " fps");
-                    frames = 0;
-                    prevTime = currentTime;
-                }
-                */
-
-                //Renderizado
-                if (this.mDesktopGraphics.prepareFrame()) {
-                    try {
-                        this.mSceneManager.render();
-                    } finally {
-                        this.mDesktopGraphics.endFrame();
-                    }
-                }
-
-                mSceneManager.ChangeIfNextScene();
+            // Evitamos división por cero o deltas negativos en caso de lecturas idénticas de reloj
+            if (nanoElapsedTime <= 0) {
+                continue;
             }
+
+            // Delta time expresado en segundos dinámicamente según la velocidad de ejecución
+            double dt = nanoElapsedTime / 1000000000.0;
+            lastTime = currentTime;
+
+            // Entrada e input
+            List<InputEvent> events = mInputManager.getEvents();
+            mSceneManager.handleInput(events);
+
+            // Actualización lógica con dt dinámico
+            mSceneManager.update(dt);
+
+        /*
+        // Informe de FPS
+        frames++;
+        if (currentTime - prevTime >= 1000000000L) {
+            long fps = (frames * 1000000000L) / (currentTime - prevTime);
+            System.out.println(fps + " fps");
+            frames = 0;
+            prevTime = currentTime;
+        }
+        */
+
+            // Renderizado
+            if (this.mDesktopGraphics.prepareFrame()) {
+                try {
+                    this.mSceneManager.render();
+                } finally {
+                    this.mDesktopGraphics.endFrame();
+                }
+            }
+
+            mSceneManager.ChangeIfNextScene();
         }
     }
 }

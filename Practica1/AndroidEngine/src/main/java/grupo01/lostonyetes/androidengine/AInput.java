@@ -15,12 +15,15 @@ public class AInput implements IInput , View.OnTouchListener{
     List<InputEvent> eventList;
     List<InputEvent> eventsToHandled;
 
-    public AInput(View view){
+    AndroidEngine eng;
+
+    public AInput(View view, AndroidEngine _eng){
         this.eventList = new ArrayList<>();
         this.eventsToHandled = new ArrayList<>();
         if (view != null) {
             view.setOnTouchListener(this);
         }
+        this.eng = _eng;
     }
 
     @Override
@@ -40,8 +43,8 @@ public class AInput implements IInput , View.OnTouchListener{
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         int action = motionEvent.getAction();
-        float x = motionEvent.getX();
-        float y = motionEvent.getY();
+        float x = this.eng.getGraphics().getLogicX((int)motionEvent.getX());
+        float y = this.eng.getGraphics().getLogicY((int)motionEvent.getY());
 
         InputType type = null;
 

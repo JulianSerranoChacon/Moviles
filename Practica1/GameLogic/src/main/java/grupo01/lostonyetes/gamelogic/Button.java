@@ -13,8 +13,9 @@ public class Button{
     int colorTexto;
     IFont miFuente;
     String texto;
+    float arc;
 
-    public Button(int _x, int _y, int _w, int _h,
+    public Button(int _x, int _y, int _w, int _h, float _arc,
                   int _colorBackground, int _colorTexto, IFont _miFuente, String _texto){
         x = _x; y = _y;
         w = _w; h = _h;
@@ -22,6 +23,7 @@ public class Button{
         colorTexto = _colorTexto;
         miFuente = _miFuente;
         texto = _texto;
+        this.arc = _arc;
     }
     public void SetText(String s){
         texto = s;
@@ -40,7 +42,7 @@ public class Button{
 
     public void render(IGraphics graphics){
         graphics.setColor(colorBackground);
-        graphics.fillRectangle(x,y,w,h);
+        graphics.fillRoundRectangle(x,y,w,h,arc);
         graphics.setColor(colorTexto);
         graphics.drawText(texto, x + (w/2), y + (h/2), miFuente, true);
     }

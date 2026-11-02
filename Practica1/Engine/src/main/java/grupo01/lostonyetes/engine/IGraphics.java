@@ -17,10 +17,11 @@ public interface IGraphics {
     void setColor(int colorARGB);
     void drawText(String text, int x, int y, IFont font, boolean center);
     void drawImage(IImage img);
-    void fillRoundRectangle();
+    void fillRoundRectangle(float x, float y, float w, float h, float arc);
     void fillRectangle(int x, int y, int w, int h);
     void fillCircle(int x, int y, int r);
     void drawLine();
     void drawTest();
+    void clear();
 
 }
